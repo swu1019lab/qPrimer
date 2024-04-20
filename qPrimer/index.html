@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>qPrimer report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.css">
+    <style>
+        .navbar {
+            --tblr-bg-surface: #fff;
+            --tblr-border-width: 1px;
+            --tblr-border-color: #dadfe5;
+            --tblr-body-color: #182433;
+            --tblr-navbar-bg: var(--tblr-bg-surface);
+            --tblr-navbar-border-width: var(--tblr-border-width);
+            --tblr-navbar-active-border-color: var(--tblr-primary);
+            --tblr-navbar-active-bg: rgba(0, 0, 0, 0.06);
+            --tblr-navbar-color: var(--tblr-body-color);
+            --tblr-navbar-border-color: var(--tblr-border-color);
+            align-items: stretch;
+            min-height: 3.5rem;
+            box-shadow: inset 0 calc(-1 * var(--tblr-navbar-border-width)) 0 0 var(--tblr-navbar-border-color);
+            background: var(--tblr-navbar-bg);
+            color: var(--tblr-navbar-color);
+        }
+
+        .page-pretitle {
+            --tblr-font-weight-bold: 600;
+            --tblr-muted: #667382;
+            font-size: .625rem;
+            font-weight: var(--tblr-font-weight-bold);
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            line-height: 1rem;
+            color: var(--tblr-muted);
+        }
+
+        .page-title {
+            --tblr-font-weight-bold: 600;
+            margin: 0;
+            font-size: 1.75rem;
+            line-height: 1.75rem;
+            font-weight: var(--tblr-font-weight-bold);
+            color: inherit;
+            display: flex;
+            align-items: center;
+        }
+
+        .row {
+            --bs-gutter-y: 1.5rem;
+        }
+
+        .card-status-top {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 2px;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .bg-red {
+            background-color: rgba(214, 57, 57, 1) !important;
+        }
+
+        .bg-blue {
+            --tblr-blue-rgb: 32, 107, 196;
+            --tblr-bg-opacity: 1;
+            background-color: rgba(var(--tblr-blue-rgb), var(--tblr-bg-opacity)) !important;
+        }
+
+        .bg-yellow {
+            --tblr-yellow-rgb: 245, 159, 0;
+            --tblr-bg-opacity: 1;
+            background-color: rgba(var(--tblr-yellow-rgb), var(--tblr-bg-opacity)) !important;
+        }
+
+        .bg-green {
+            --tblr-green-rgb: 47, 179, 68;
+            --tblr-bg-opacity: 1;
+            background-color: rgba(var(--tblr-green-rgb), var(--tblr-bg-opacity)) !important;
+        }
+
+        .ribbon {
+            --tblr-primary: #206bc4;
+            --tblr-font-weight-bold: 600;
+            --tblr-border-radius: 4px;
+            --tblr-ribbon-margin: 0.25rem;
+            --tblr-ribbon-border-radius: var(--tblr-border-radius);
+            position: absolute;
+            top: .75rem;
+            right: calc(-1 * var(--tblr-ribbon-margin));
+            z-index: 1;
+            padding: .25rem .75rem;
+            font-size: .625rem;
+            font-weight: var(--tblr-font-weight-bold);
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            text-transform: uppercase;
+            background: var(--tblr-primary);
+            border-color: var(--tblr-primary);
+            border-radius: var(--tblr-ribbon-border-radius) 0 var(--tblr-ribbon-border-radius) var(--tblr-ribbon-border-radius);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 2rem;
+            min-width: 2rem;
+        }
+
+        .ribbon-top {
+            top: calc(-1 * var(--tblr-ribbon-margin));
+            right: .75rem;
+            width: 2rem;
+            padding: .5rem 0;
+            border-radius: 0 var(--tblr-ribbon-border-radius) var(--tblr-ribbon-border-radius) var(--tblr-ribbon-border-radius);
+        }
+
+        .ribbon.bg-yellow {
+            --tblr-yellow: #f59f00;
+            border-color: var(--tblr-yellow);
+        }
+
+        .ribbon:before {
+            --tblr-border-style: solid;
+            position: absolute;
+            right: 0;
+            bottom: 100%;
+            width: 0;
+            height: 0;
+            content: "";
+            filter: brightness(70%);
+            border: calc(var(--tblr-ribbon-margin) * .5) var(--tblr-border-style);
+            border-color: inherit;
+            border-top-color: transparent;
+            border-right-color: transparent;
+        }
+
+        .ribbon-top:before {
+            top: 0;
+            right: 100%;
+            bottom: auto;
+            border-color: inherit;
+            border-top-color: transparent;
+            border-left-color: transparent;
+        }
+
+        *, ::after, ::before {
+            box-sizing: border-box;
+        }
+
+        .progress-sm {
+            height: .25rem;
+        }
+
+        .text-green {
+            --tblr-green-rgb: 47, 179, 68;
+            --tblr-text-opacity: 1;
+            color: rgba(var(--tblr-green-rgb), var(--tblr-text-opacity)) !important;
+        }
+
+        .card-title {
+            --tblr-font-weight-medium: 500;
+            display: block;
+            margin: 0 0 0;
+            font-size: 1rem;
+            font-weight: var(--tblr-font-weight-medium);
+            line-height: 1.5rem;
+        }
+
+        .card-header {
+            color: inherit;
+            display: flex;
+            align-items: center;
+            background: 0 0;
+        }
+
+        .table thead th {
+            --tblr-muted: #667382;
+            --tblr-bg-surface-tertiary: #fcfdfe;
+            --tblr-font-weight-bold: 600;
+            color: var(--tblr-muted);
+            background: var(--tblr-bg-surface-tertiary);
+            font-size: .625rem;
+            font-weight: var(--tblr-font-weight-bold);
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            line-height: 1rem;
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+            white-space: nowrap;
+        }
+
+        .sequence {
+            word-wrap: break-word;
+            max-width: 200px;
+            font-size: .625rem;
+            font-weight: var(--tblr-font-weight-bold);
+        }
+    </style>
+</head>
+<body>
+
+<header class="navbar">
+    <div class="container">
+        <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+            <a href="https://qprimerdb.biodb.org/index">
+              <img src="https://qprimerdb.biodb.org/static/logo.741248ee.svg" width="110" height="32" alt="qPrimerDB"
+                   class="navbar-brand-image">
+            </a>
+          </h1>
+    </div>
+</header>
+
+<div class="container px-4 py-4">
+    <div class="row g-2 align-items-center">
+        <div class="col">
+            <!-- Page pre-title -->
+            <div class="page-pretitle">
+                Overview
+            </div>
+            <h2 class="page-title">
+                qPrimer report
+            </h2>
+        </div>
+        <!-- Page title actions -->
+        <div class="col-auto ms-auto d-print-none">
+            <div class="btn-list">
+                <button type="button" class="btn btn-primary px-4 gap-3">
+                    <a href="https://qprimerdb.biodb.org/index" class="text-reset" style="text-decoration: none">
+                        Learn more
+                    </a>
+                </button>
+                <button type="button" class="btn btn-outline-secondary px-4">
+                    <a href="https://people.biodb.org/contact" class="text-reset" style="text-decoration: none">
+                        Contact us
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container px-4 py-4">
+    <div class="row row-deck row-cards">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card h-100">
+                <div class="card-status-top bg-red"></div>
+                <div class="ribbon bg-red">NEW</div>
+                <div class="card-body h-100">
+                    <div class="subheader">Genes</div>
+                    <div class="h1 mb-3">{{ summary.get('gene_num') }}</div>
+                    <div class="d-flex mb-2">
+                        <div>Success rate</div>
+                        <div class="ms-auto">
+                        <span class="text-green d-inline-flex align-items-center lh-1">
+                            {{ summary.get('success_rate') }}%
+                        </span>
+                        </div>
+                    </div>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-primary"
+                             style="{{ 'width: {}%'.format(summary.get('success_rate')) }}"
+                             role="progressbar"
+                             aria-valuenow="{{ summary.get('success_rate') }}"
+                             aria-valuemin="0" aria-valuemax="100"
+                             aria-label="{{ summary.get('success_rate') }}% Complete">
+                            <span class="visually-hidden">{{ summary.get('success_rate') }}% Complete</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-status-top bg-red"></div>
+                    <div class="ribbon bg-red">NEW</div>
+                    <div class="subheader">Best Primer pairs</div>
+                    <div class="h1 mb-3 me-2">{{ summary.get('best_primers_num') }}</div>
+                    <div class="d-flex mb-2">
+                        <div>Percentage</div>
+                        <div class="ms-auto">
+                        <span class="text-green d-inline-flex align-items-center lh-1">
+                          {{ summary.get('specificity_rate') }}%
+                        </span>
+                        </div>
+                    </div>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-primary"
+                             style="{{ 'width: {}%'.format(summary.get('specificity_rate')) }}"
+                             role="progressbar"
+                             aria-valuenow="{{ summary.get('specificity_rate') }}"
+                             aria-valuemin="0" aria-valuemax="100"
+                             aria-label="{{ summary.get('specificity_rate') }}% Complete">
+                            <span class="visually-hidden">{{ summary.get('specificity_rate') }}% Complete</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-status-top bg-blue"></div>
+                    <div class="ribbon bg-blue">NEW</div>
+                    <div class="subheader">Primer pairs per gene</div>
+                    <div class="h1 mb-3 me-2">{{ summary.get('primer_pairs_per_gene') }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-status-top bg-blue"></div>
+                    <div class="ribbon bg-blue">NEW</div>
+                    <div class="subheader">All Primer pairs</div>
+                    <div class="h1 mb-3 me-2">{{ summary.get('all_primers_num') }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="ribbon ribbon-top bg-red"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                         stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Statistical metrics of primers</h3>
+                    <div class="my-4" id="main1" style="min-height:250px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="ribbon ribbon-top bg-blue"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                         stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Annotation metrics of primers</h3>
+                    <div class="my-4" id="main2" style="min-height:250px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h3 class="card-title">Details of top {{ data | length }} genes</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table
+                                id="table"
+                                data-toggle="table"
+                                data-toolbar="#toolbar"
+                                data-search="true"
+                                data-show-refresh="true"
+                                data-show-toggle="true"
+                                data-show-fullscreen="true"
+                                data-show-columns="true"
+                                data-show-columns-toggle-all="true"
+                                data-show-export="true"
+                                data-export-data-type="selected"
+                                data-pagination="true"
+                                data-checkbox-header="true"
+                                data-click-to-select="true"
+                                data-page-list="[5, 10, All]"
+                        >
+                            <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true" data-halign="center"
+                                    data-align="center"></th>
+                                <th data-field="num" class="w-1" data-halign="center" data-align="center">No.
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm icon-thick" width="24"
+                                         height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                         fill="none"
+                                         stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M6 15l6 -6l6 6"></path>
+                                    </svg>
+                                </th>
+                                <th data-field="gene" data-halign="center" data-align="center">Gene ID</th>
+                                <th data-field="primers-num" data-halign="center" data-align="center">Primers number
+                                </th>
+                                <th data-field="sequence-len" data-halign="center" data-align="center">Seq length</th>
+                                <th data-field="exons-num" data-halign="center" data-align="center">Exons number</th>
+                                <th data-field="snps-num" data-halign="center" data-align="center">SNPs number</th>
+                                <th data-field="database" data-halign="center" data-align="center">Database</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for gene in data %}
+                            <tr>
+                                <td data-checkbox="true"></td>
+                                <td><span class="text-muted">{{ loop.index }}</span></td>
+                                <td>
+                                    <a href="#{{ gene.get('SEQUENCE_ID') }}" class="text-reset" tabindex="-1">
+                                        {{ gene.get('SEQUENCE_ID') }}
+                                    </a>
+                                </td>
+                                <td>{{ gene.get('PRIMER_PAIR_NUM_RETURNED') }}</td>
+                                <td>{{ gene.get('SEQUENCE_TEMPLATE')|length }}</td>
+                                <td>{{ gene.get('EXON_COORD')|length }}</td>
+                                <td>{{ gene.get('SNP_COORD')|length if gene.get('SNP_COORD') else 0 }}</td>
+                                <td>{{ gene.get('DATABASE') }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    The report was generated by qPrimer.
+                </div>
+            </div>
+        </div>
+        {% for gene in data %}
+        <div class="col-12" id="{{ gene.get('SEQUENCE_ID') }}">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h3 class="card-title">{{ gene.get('SEQUENCE_ID') }}</h3>
+                </div>
+                <div class="card-body">
+                    <!-- table info -->
+                    <div class="table-responsive">
+                        <table
+                                id="{{ loop.index }}"
+                                data-toggle="table"
+                                data-search="true"
+                                data-pagination="true"
+                                data-show-columns="true"
+                                data-show-export="true"
+                                data-export-data-type="all"
+                                data-export-options='{"fileName": "{{ gene.get("SEQUENCE_ID") }}"}'
+                                data-page-list="[5, 10, All]"
+                        >
+                            <thead>
+                            <tr class="tr-class-1">
+                                <th data-halign="center" data-align="center">ID</th>
+                                <th data-halign="center" data-align="center">SEQUENCE</th>
+                                <th data-sortable="true" data-halign="center" data-align="center">PENALTY</th>
+                                <th data-halign="center" data-align="center">COMPL_ANY_TH</th>
+                                <th data-halign="center" data-align="center">COMPL_END_TH</th>
+                                <th data-halign="center" data-align="center">PRODUCT_SIZE</th>
+                                <th data-halign="center" data-align="center">PRODUCT_TM</th>
+                                <th data-halign="center" data-align="center">EXON_SPAN</th>
+                                <th data-halign="center" data-align="center">SNP_SPAN</th>
+                                <th data-halign="center" data-align="center">SPECIFICITY</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for primer in gene.get('PRIMER_PAIR') %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>
+                                    <div class="d-flex py-1 align-items-center">
+                                        <div class="bg-blue text-white avatar me-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-badge-right">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M13 7h-6l4 5l-4 5h6l4 -5z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="sequence">{{ gene.get('PRIMER_LEFT')[loop.index0].get('SEQUENCE')
+                                            }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex py-1 align-items-center">
+                                        <div class="bg-green text-white avatar me-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-badge-left">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M11 17h6l-4 -5l4 -5h-6l-4 5z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="sequence">{{ gene.get('PRIMER_RIGHT')[loop.index0].get('SEQUENCE')
+                                            }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ primer.get('PENALTY')|round(2) }}</td>
+                                <td>{{ primer.get('COMPL_ANY_TH')|round(2) }}</td>
+                                <td>{{ primer.get('COMPL_END_TH')|round(2) }}</td>
+                                <td>{{ primer.get('PRODUCT_SIZE') }}</td>
+                                <td>{{ primer.get('PRODUCT_TM')|round(2) }}</td>
+                                <td>{{ primer.get('EXON_SPAN') }}</td>
+                                <td>{{ primer.get('SNP_SPAN') }}</td>
+                                <td>{{ primer.get('SPECIFICITY') }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    The report was generated by qPrimer.
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<footer class="py-3">
+    <p class="text-center text-muted border-top py-4">© 2024 qPrimerDB. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.28.0/tableExport.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table/dist/extensions/export/bootstrap-table-export.min.js"></script>
+<script>
+    // init echarts
+    const myChart = echarts.init(document.getElementById('main1'));
+    window.addEventListener('resize', function () {
+        myChart.resize();
+    });
+    // configure option
+    const data0 = {{ summary.get('penalty') }}
+    const data1 = {{ summary.get('bound') }}
+    const data2 = {{ summary.get('gc') }}
+    const data3 = {{ summary.get('end_stability') }}
+
+    const option = {
+        legend: {},
+        tooltip: {},
+        dataset: [
+            {source: data0},
+            {source: data1},
+            {source: data2},
+            {source: data3}
+        ],
+        grid: [
+            {left: '10%', top: '15%', width: '35%', height: '30%'},
+            {right: '10%', top: '15%', width: '35%', height: '30%'},
+            {left: '10%', bottom: '10%', width: '35%', height: '30%'},
+            {right: '10%', bottom: '10%', width: '35%', height: '30%'}
+        ],
+        xAxis: [
+            {type: 'category', gridIndex: 0},
+            {type: 'category', gridIndex: 1},
+            {type: 'category', gridIndex: 2},
+            {type: 'category', gridIndex: 3}
+        ],
+        yAxis: [
+            {
+                gridIndex: 0,
+                min: 0,
+                max: 1,
+                axisLine: {
+                    show: true,
+                    onZero: true
+                },
+                axisTick: {
+                    show: true
+                },
+                axisLabel: {
+                    show: true
+                }
+            },
+            {
+                gridIndex: 1,
+                min: 0,
+                max: 100,
+                axisLine: {
+                    show: true,
+                    onZero: true
+                },
+                axisTick: {
+                    show: true
+                },
+                axisLabel: {
+                    show: true
+                }
+            },
+            {
+                gridIndex: 2,
+                min: 0,
+                max: 100,
+                axisLine: {
+                    show: true,
+                    onZero: true
+                },
+                axisTick: {
+                    show: true
+                },
+                axisLabel: {
+                    show: true
+                }
+            },
+            {
+                gridIndex: 3,
+                min: 0,
+                max: 10,
+                axisLine: {
+                    show: true,
+                    onZero: true
+                },
+                axisTick: {
+                    show: true
+                },
+                axisLabel: {
+                    show: true
+                }
+            }
+        ],
+        series: [
+            {
+                type: 'bar',
+                datasetIndex: 0,
+                xAxisIndex: 0,
+                yAxisIndex: 0
+            },
+            {
+                type: 'bar',
+                datasetIndex: 1,
+                xAxisIndex: 1,
+                yAxisIndex: 1
+            },
+            {
+                type: 'bar',
+                datasetIndex: 2,
+                xAxisIndex: 2,
+                yAxisIndex: 2
+            },
+            {
+                type: 'bar',
+                datasetIndex: 3,
+                xAxisIndex: 3,
+                yAxisIndex: 3
+            }
+        ]
+    };
+
+    // set option
+    myChart.setOption(option);
+</script>
+<script>
+    // init echarts
+    const myChart2 = echarts.init(document.getElementById('main2'));
+    window.addEventListener('resize', function () {
+        myChart2.resize();
+    });
+    const data4 = {{ summary.get('exon_span') }}
+    const data5 = {{ summary.get('snp_span') }}
+    // configure option
+    const option2 = {
+        color: ["#006699", "#4cabce", "#e5323e"],
+        title: [
+            {
+                text: 'Exon span number',
+                left: '25%',
+                top: 'top',
+                textAlign: 'center',
+                textStyle: {
+                    fontSize: 12
+                }
+            },
+            {
+                text: 'SNP span number',
+                left: '75%',
+                top: 'top',
+                textAlign: 'center',
+                textStyle: {
+                    fontSize: 12
+                }
+            }
+        ],
+        angleAxis: [
+            {polarIndex: 0},
+            {polarIndex: 1}
+        ],
+        radiusAxis: [
+            {
+                type: 'category',
+                z: 10,
+                polarIndex: 0,
+            },
+            {
+                type: 'category',
+                z: 10,
+                polarIndex: 1,
+            }
+        ],
+        polar: [
+            {
+                center: ['25%', '50%'],
+                radius: '60%'
+            },
+            {
+                center: ['75%', '50%'],
+                radius: '60%'
+            }
+        ],
+        dataset: [
+            {
+                source: data4
+            },
+            {
+                source: data5
+            }
+        ],
+        series: [
+            {
+                type: 'bar',
+                datasetIndex: 0,
+                polarIndex: 0,
+                coordinateSystem: 'polar',
+                name: 'Primer pairs',
+                stack: 'a',
+                emphasis: {
+                    focus: 'series'
+                },
+                encode: {
+                    radius: "index",
+                    angle: "Primer pairs"
+                }
+            },
+            {
+                type: 'bar',
+                datasetIndex: 0,
+                polarIndex: 0,
+                coordinateSystem: 'polar',
+                name: 'Left primers',
+                stack: 'a',
+                emphasis: {
+                    focus: 'series'
+                },
+                encode: {
+                    radius: "index",
+                    angle: "Left primers"
+                }
+            },
+            {
+                type: 'bar',
+                datasetIndex: 0,
+                polarIndex: 0,
+                coordinateSystem: 'polar',
+                name: 'Right primers',
+                stack: 'a',
+                emphasis: {
+                    focus: 'series'
+                },
+                encode: {
+                    radius: "index",
+                    angle: "Right primers"
+                }
+            },
+            {
+                type: 'bar',
+                datasetIndex: 1,
+                polarIndex: 1,
+                coordinateSystem: 'polar',
+                name: 'Primer pairs',
+                stack: 'b',
+                emphasis: {
+                    focus: 'series'
+                },
+                encode: {
+                    radius: "index",
+                    angle: "Primer pairs"
+                }
+            },
+            {
+                type: 'bar',
+                datasetIndex: 1,
+                polarIndex: 1,
+                coordinateSystem: 'polar',
+                name: 'Left primers',
+                stack: 'b',
+                emphasis: {
+                    focus: 'series'
+                },
+                encode: {
+                    radius: "index",
+                    angle: "Left primers"
+                }
+            },
+            {
+                type: 'bar',
+                datasetIndex: 1,
+                polarIndex: 1,
+                coordinateSystem: 'polar',
+                name: 'Right primers',
+                stack: 'b',
+                emphasis: {
+                    focus: 'series'
+                },
+                encode: {
+                    radius: "index",
+                    angle: "Right primers"
+                }
+            }
+        ],
+        legend: [
+            {
+                data: ['Primer pairs', 'Left primers', 'Right primers'],
+                top: 'bottom',
+                left: 'center'
+            },
+            {
+                data: ['Primer pairs', 'Left primers', 'Right primers'],
+                top: 'bottom',
+                left: 'center'
+            }
+        ],
+        tooltip: {
+            show: true,
+        }
+    };
+    // set option
+    myChart2.setOption(option2);
+</script>
+</body>
+</html>
