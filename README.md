@@ -52,6 +52,7 @@ qPrimer \
 
 If you use qPrimer and qPrimerDB, please cite the following paper:
 
-```
-Kun Lu†,*, Tian Li†, Jian He†, Wei Chang†, Rui Zhang, Miao Liu, Mengna Yu, Yonghai Fan, Jinqi Ma, Wei Sun, Cunmin Qu, Liezhao Liu, Nannan Li, Ying Liang, Rui Wang, Wei Qian, Zhanglin Tang, Xinfu Xu, Bo Lei, Kai Zhang*, Jiana Li*. qPrimerDB: A thermodynamics-based gene-specific qPCR primer database for 147 organisms. Nucleic Acids Research. 2018, 46: D1229-D1236. 
-```
+Kun Lu†, Tian Li†, Jian He†, Wei Chang†, Rui Zhang, Miao Liu, Mengna Yu, Yonghai Fan, Jinqi Ma, Wei Sun, Cunmin Qu,
+Liezhao Liu, Nannan Li, Ying Liang, Rui Wang, Wei Qian, Zhanglin Tang, Xinfu Xu, Bo Lei, Kai Zhang*, Jiana Li*.
+qPrimerDB: A thermodynamics-based gene-specific qPCR primer database for 147 organisms.
+Nucleic Acids Research. 2018, 46: D1229-D1236.
