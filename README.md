@@ -24,13 +24,13 @@ pip install dist/qprimer-1.0.3.tar.gz --user
 # Design primers
 qPrimer --design --seq_file test_cds.fa
 
-# Check primers
+# Check primers specificity
 qPrimer \
 --design --check \
 --seq_file test_cds.fa \
 --database test.fa
 
-# Annotate primers
+# Annotate primers with gene information and SNP information
 qPrimer \
 --design --check --annotate \
 --seq_file test_cds.fa \
@@ -38,7 +38,7 @@ qPrimer \
 --gtf_file genes.gtf \
 --snp_file test_snps.bed
 
-# Visualize primers
+# Visualize primers results with a html page
 # --visualize requires the output from --design, --check, and --annotate
 qPrimer \
 --design --check --annotate --visualize \
@@ -47,6 +47,10 @@ qPrimer \
 --gtf_file genes.gtf \
 --snp_file test_snps.bed
 ```
+
+![qPrimer_report-1](https://cdn.jsdelivr.net/gh/swu1019lab/md_img/qPrimer_report-1.jpeg)
+![qPrimer_report-2](https://cdn.jsdelivr.net/gh/swu1019lab/md_img/qPrimer_report-2.jpeg)
+![qPrimer_report-3](https://cdn.jsdelivr.net/gh/swu1019lab/md_img/qPrimer_report-3.jpeg)
 
 ## Citation
 
