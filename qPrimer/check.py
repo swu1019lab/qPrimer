@@ -4,6 +4,7 @@
 # @Email   : lxd1997xy@163.com
 # @File    : check.py
 
+import json
 import subprocess
 from multiprocessing import Pool
 from collections import Counter
@@ -61,8 +62,10 @@ def check_specificity(primer_result):
     return primer_result
 
 
-def run(primer_results, database, processes):
+def run(primers, database, out_file, processes):
     print('Check module is running.')
+    # Load the primer results from the json file
+    primer_results = json.load(open(primers))
     # Create a pool of processes
     with Pool(processes=processes) as pool:
         # Add the database to the primer results
@@ -74,5 +77,7 @@ def run(primer_results, database, processes):
                 primer_results[i]['DATABASE'] = database
         # Check the specificity of all primer pair of each sequence
         primer_results = pool.map(check_specificity, primer_results)
-    return primer_results
 
+    # Save the results to a json file
+    with open(out_file, 'w') as file:
+        json.dump(primer_results, file)

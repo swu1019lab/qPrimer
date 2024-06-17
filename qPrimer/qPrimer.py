@@ -6,27 +6,61 @@
 
 import argparse
 import logging
+import os.path
 import time
-import json
 from . import design, annotate, check, visualize  # import your modules
 
 
 def main():
-    # Parse the command line arguments
+    # Create a parser for the main command
     parser = argparse.ArgumentParser(description='Run qPrimer package.')
-    parser.add_argument('--design', action='store_true', help='Run design module')
-    parser.add_argument('--annotate', action='store_true', help='Run annotate module')
-    parser.add_argument('--check', action='store_true', help='Run check module')
-    parser.add_argument('--visualize', action='store_true', help='Run visualize module')
-    parser.add_argument('--seq_file', type=str, help='Path to the sequence file with fasta format')
-    parser.add_argument('--gtf_file', type=str, help='Path to the GTF file')
-    parser.add_argument('--snp_file', type=str, help='Path to the SNP file with bed format')
-    parser.add_argument('--database', type=str, help='Path to the database file with fasta format')
-    parser.add_argument('--processes', type=int, default=1, help='Number of processes to use')
-    parser.add_argument('--out_file', type=str, default='qPrimer.json',
-                        help='Path to the output file with json format')
-    parser.add_argument('--html_file', type=str, default='qPrimer.html', help='Path to the output html file')
     parser.add_argument('--log_file', type=str, default='qPrimer.log', help='Path to the log file')
+
+    subparsers = parser.add_subparsers(dest='module', help='Specify the module to run')
+
+    # Create a parser for the design module
+    design_parser = subparsers.add_parser('design', help='Run design module')
+    design_parser.add_argument('--seq_file', required=True, type=str,
+                               help='Path to the sequence file with fasta format')
+    design_parser.add_argument('--ini_file', type=str,
+                               help='Path to the Primer3 configuration file with ini format')
+    design_parser.add_argument('--processes', type=int, default=1,
+                               help='Number of processes to use')
+    design_parser.add_argument('--out_file', type=str, default='qPrimer.json',
+                               help='Path to the output file with json format')
+
+    # Create a parser for the annotate module
+    annotate_parser = subparsers.add_parser('annotate', help='Run annotate module')
+    annotate_parser.add_argument('--primers', required=True, type=str,
+                                 help='Path to the primers results with json format')
+    annotate_parser.add_argument('--gtf_file', required=True, type=str,
+                                 help='Path to the GTF file')
+    annotate_parser.add_argument('--snp_file', required=True, type=str,
+                                 help='Path to the SNP file with bed format')
+    annotate_parser.add_argument('--processes', type=int, default=1,
+                                 help='Number of processes to use')
+    annotate_parser.add_argument('--out_file', type=str, default='qPrimer.json',
+                                 help='Path to the output file with json format')
+
+    # Create a parser for the check module
+    check_parser = subparsers.add_parser('check', help='Run check module')
+    check_parser.add_argument('--primers', required=True, type=str,
+                              help='Path to the primers results with json format')
+    check_parser.add_argument('--database', required=True, type=str,
+                              help='Path to the database file with fasta format')
+    check_parser.add_argument('--processes', type=int, default=1,
+                              help='Number of processes to use')
+    check_parser.add_argument('--out_file', type=str, default='qPrimer.json',
+                              help='Path to the output file with json format')
+
+    # Create a parser for the visualize module
+    visualize_parser = subparsers.add_parser('visualize', help='Run visualize module')
+    visualize_parser.add_argument('--primers', required=True, type=str,
+                                  help='Path to the primers results with json format')
+    visualize_parser.add_argument('--seq_file', required=True, type=str,
+                                  help='Path to the sequence file with fasta format')
+    visualize_parser.add_argument('--html_file', type=str, default='qPrimer.html',
+                                  help='Path to the output html file')
 
     args = parser.parse_args()
 
@@ -41,21 +75,19 @@ def main():
     start_time = time.time()
 
     # Run the qPrimer package
-    primer_results = None
-    if args.design:
-        primer_results = design.run(args.seq_file, args.processes)
-        if args.annotate:
-            primer_results = annotate.run(primer_results, args.gtf_file, args.snp_file, args.processes)
-        if args.check:
-            primer_results = check.run(primer_results, args.database, args.processes)
-        if args.visualize:
-            visualize.run(primer_results, args.seq_file, args.html_file)
+    if os.path.exists(args.out_file):
+        args.out_file = args.out_file.replace('.json', '_new.json')
+
+    if args.module == 'design':
+        design.run(args.seq_file, args.ini_file, args.out_file, args.processes)
+    elif args.module == 'annotate':
+        annotate.run(args.primers, args.gtf_file, args.snp_file, args.out_file, args.processes)
+    elif args.module == 'check':
+        check.run(args.primers, args.database, args.out_file, args.processes)
+    elif args.module == 'visualize':
+        visualize.run(args.primers, args.seq_file, args.html_file)
     else:
-        raise ValueError('Please specify the design module to run with --design option.')
-    if primer_results:
-        # Save the results to a json file
-        with open(args.out_file, 'w') as file:
-            json.dump(primer_results, file)
+        parser.print_help()
 
     end_time = time.time()
     logging.info('Finished running qPrimer package')

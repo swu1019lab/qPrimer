@@ -15,37 +15,38 @@ cd qPrimer
 # install the package using build and pip commands
 pip install build --user
 python -m build
-pip install dist/qprimer-1.0.3.tar.gz --user
+pip install dist/qprimer-1.0.4.tar.gz --user
 ```
 
 ## Example
 
 ```shell
 # Design primers
-qPrimer --design --seq_file test_cds.fa
+qPrimer design --seq_file test_cds.fa
+
+# Design primers with multiple CPUs
+qPrimer design --seq_file test_cds.fa --processes 4
+
+# Design primers with specific parameters, like primer length, Tm, GC content, etc.
+qPrimer design --seq_file test_cds.fa --ini_file test.ini
 
 # Check primers specificity
-qPrimer \
---design --check \
---seq_file test_cds.fa \
+qPrimer check \
+--primers qPrimer.json \
 --database test.fa
 
 # Annotate primers with gene information and SNP information
-qPrimer \
---design --check --annotate \
---seq_file test_cds.fa \
---database test.fa \
+qPrimer annotate \
+--primers qPrimer.json \
 --gtf_file genes.gtf \
 --snp_file test_snps.bed
 
 # Visualize primers results with a html page
 # --visualize requires the output from --design, --check, and --annotate
-qPrimer \
---design --check --annotate --visualize \
+qPrimer visualize \
+--primers qPrimer.json \
 --seq_file test_cds.fa \
---database test.fa \
---gtf_file genes.gtf \
---snp_file test_snps.bed
+--html_file qPrimer.html
 ```
 
 ![qPrimer_report-1](https://cdn.jsdelivr.net/gh/swu1019lab/md_img/qPrimer_report-1.jpeg)

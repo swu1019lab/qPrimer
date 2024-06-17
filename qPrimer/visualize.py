@@ -11,9 +11,11 @@ from Bio import SeqIO
 import os
 
 
-def run(primer_results, seq_file, html_file, genes_num=10):
+def run(primers, seq_file, html_file, genes_num=10):
     print('Visualize module is running.')
+    # Load the primer results from a JSON file
     # primer_results = json.load(open('tests/qPrimer.json'))
+    primer_results = json.load(open(primers))
 
     # Create a Pandas DataFrame from the primer results
     # primer pairs (need to check if the columns are exist)

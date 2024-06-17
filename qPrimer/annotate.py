@@ -4,6 +4,7 @@
 # @Email   : lxd1997xy@163.com
 # @File    : annotate.py
 
+import json
 import multiprocessing
 from collections import defaultdict
 import numpy as np
@@ -194,17 +195,20 @@ def annotate_snp_span(primer_result):
     return primer_result
 
 
-def run(primer_results, gtf_file, snp_file, processes=1):
+def run(primers, gtf_file, snp_file, out_file, processes=1):
     """
     Annotate the exon span and snp span of all primer pair of each sequence.
 
-    :param primer_results: a list of primer result for each sequence
+    :param primers: a JSON file with primer results
     :param gtf_file: a GTF file with gene annotation information
     :param snp_file: a BED file with SNP information (a basic BED format: chr\tstart\tend)
+    :param out_file: a JSON file to save the annotated primer results
     :param processes: the number of processes to use, default is 1
     :return: a list of primer result for each sequence with exon span and snp span
     """
     print('Annotate module is running.')
+    # Load the primer results from the JSON file
+    primer_results = json.load(open(primers))
     # Extract mrna and exon coordinates from the GTF file
     mrna_coord, exon_coord = extract_coord_from_gtf(gtf_file)
     # Extract snp coordinates from the SNP file and keep only the snps that are within the gene
@@ -223,4 +227,7 @@ def run(primer_results, gtf_file, snp_file, processes=1):
         primer_results = pool.map(annotate_exon_span, primer_results)
         # Annotate the snp span of all primer pair of each sequence
         primer_results = pool.map(annotate_snp_span, primer_results)
-    return primer_results
+
+    # Save the results to a json file
+    with open(out_file, 'w') as file:
+        json.dump(primer_results, file)
