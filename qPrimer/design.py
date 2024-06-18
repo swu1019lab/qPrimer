@@ -82,7 +82,7 @@ def load_config(config_file) -> tuple[dict, dict]:
         elif key.upper() == 'SEQUENCE_EXCLUDED_REGION':
             seq_args[key.upper()] = [[int(x.split(",")[0]), int(x.split(",")[1])] for x in seq_conf[key].split()]
         elif key.upper() == 'SEQUENCE_PRIMER_PAIR_OK_REGION_LIST':
-            seq_args[key.upper()] = [[[int(e) if e else -1 for e in x.split(',')]] for x in seq_conf[key].split(";")]
+            seq_args[key.upper()] = [[int(e) if e else -1 for e in x.split(',')] for x in seq_conf[key].split(";")]
         elif key.upper() == 'SEQUENCE_OVERLAP_JUNCTION_LIST':
             seq_args[key.upper()] = [int(x) for x in seq_conf[key].split()]
         else:
