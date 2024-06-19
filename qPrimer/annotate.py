@@ -195,14 +195,14 @@ def annotate_snp_span(primer_result):
     return primer_result
 
 
-def run(primers, gtf_file, snp_file, out_file, processes=1):
+def run(primers, gtf_file, snp_file, out_name, processes=1):
     """
     Annotate the exon span and snp span of all primer pair of each sequence.
 
     :param primers: a JSON file with primer results
     :param gtf_file: a GTF file with gene annotation information
     :param snp_file: a BED file with SNP information (a basic BED format: chr\tstart\tend)
-    :param out_file: a JSON file to save the annotated primer results
+    :param out_name: a JSON file to save the annotated primer results
     :param processes: the number of processes to use, default is 1
     :return: a list of primer result for each sequence with exon span and snp span
     """
@@ -229,5 +229,7 @@ def run(primers, gtf_file, snp_file, out_file, processes=1):
         primer_results = pool.map(annotate_snp_span, primer_results)
 
     # Save the results to a json file
-    with open(out_file, 'w') as file:
+    with open(out_name + ".json", 'w') as file:
         json.dump(primer_results, file)
+
+    print('Annotate module is finished.')

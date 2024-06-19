@@ -62,7 +62,7 @@ def check_specificity(primer_result):
     return primer_result
 
 
-def run(primers, database, out_file, processes):
+def run(primers, database, out_name, processes):
     print('Check module is running.')
     # Load the primer results from the json file
     primer_results = json.load(open(primers))
@@ -79,5 +79,7 @@ def run(primers, database, out_file, processes):
         primer_results = pool.map(check_specificity, primer_results)
 
     # Save the results to a json file
-    with open(out_file, 'w') as file:
+    with open(out_name + ".json", 'w') as file:
         json.dump(primer_results, file)
+
+    print('Check module is finished.')

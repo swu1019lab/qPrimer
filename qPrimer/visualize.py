@@ -11,7 +11,7 @@ from Bio import SeqIO
 import os
 
 
-def run(primers, seq_file, html_file, genes_num=10):
+def run(primers, seq_file, out_name, genes_num=10):
     print('Visualize module is running.')
     # Load the primer results from a JSON file
     # primer_results = json.load(open('tests/qPrimer.json'))
@@ -106,5 +106,7 @@ def run(primers, seq_file, html_file, genes_num=10):
     html = template.render(data=primer_results[:genes_num], summary=design_summary)
 
     # Save the rendered HTML to a file
-    with open(html_file, 'w', encoding="utf-8") as file:
+    with open(out_name + ".html", 'w', encoding="utf-8") as file:
         file.write(html)
+
+    print('Visualize module is finished.')
