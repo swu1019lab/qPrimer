@@ -118,7 +118,6 @@ def run(sequence_file, config_file, out_name, processes) -> None:
     print(f"Designing primers for sequences in {sequence_file}")
     # Parse the sequence file
     sequences = SeqIO.parse(sequence_file, 'fasta')
-    print(f"Loaded {len(sequences)} sequences")
     # Load the configuration file
     if config_file:
         _global_args, _seq_args = load_config(config_file)
