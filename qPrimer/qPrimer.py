@@ -57,6 +57,8 @@ def main():
                                   help='Path to the primers results with json format')
     visualize_parser.add_argument('--seq_file', required=True, type=str,
                                   help='Path to the sequence file with fasta format')
+    visualize_parser.add_argument('--genes_num', type=int, default=10,
+                                  help='Number of top genes to show')
 
     args = parser.parse_args()
 
@@ -81,7 +83,7 @@ def main():
     elif args.module == 'check':
         check.run(args.primers, args.database, args.out_name, args.processes)
     elif args.module == 'visualize':
-        visualize.run(args.primers, args.seq_file, args.out_name)
+        visualize.run(args.primers, args.seq_file, args.out_name, args.genes_num)
     else:
         parser.print_help()
 
