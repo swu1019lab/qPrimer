@@ -8,9 +8,9 @@ import json
 import configparser
 import multiprocessing
 import numpy as np
+import pandas as pd
 from Bio import SeqIO
 import primer3
-
 
 # Define the global and sequence arguments for Primer3
 GLOBAL_ARGS = {
@@ -114,9 +114,11 @@ def design_primers(sequence) -> dict:
     return results
 
 
-def run(sequence_file, config_file, out_file, processes) -> None:
+def run(sequence_file, config_file, out_name, processes) -> None:
+    print(f"Designing primers for sequences in {sequence_file}")
     # Parse the sequence file
     sequences = SeqIO.parse(sequence_file, 'fasta')
+    print(f"Loaded {len(sequences)} sequences")
     # Load the configuration file
     if config_file:
         _global_args, _seq_args = load_config(config_file)
@@ -129,5 +131,15 @@ def run(sequence_file, config_file, out_file, processes) -> None:
         results = pool.map(design_primers, sequences)
 
     # Save the results to a json file
-    with open(out_file, 'w') as file:
+    with open(out_name + ".json", 'w') as file:
         json.dump(results, file)
+
+    # Save main results to a csv file
+    columns = ['PENALTY', 'SEQUENCE', 'COORDS', 'TM', 'GC_PERCENT', 'END_STABILITY']
+    df_f = pd.concat([pd.DataFrame.from_records(res['PRIMER_LEFT'], columns=columns) for res in results])
+    df_r = pd.concat([pd.DataFrame.from_records(res['PRIMER_RIGHT'], columns=columns) for res in results])
+
+    df_f.reset_index().merge(df_r.reset_index(), on='index', suffixes=('_F', '_R')).to_csv(out_name + ".csv",
+                                                                                           index=False)
+
+    print(f"Results saved to {out_name}.json and {out_name}.csv")
