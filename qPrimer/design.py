@@ -114,7 +114,7 @@ def design_primers(sequence) -> dict:
     return results
 
 
-def run(sequence_file, config_file, out_name, processes) -> None:
+def run(sequence_file, config_file, out_name, out_csv, processes) -> None:
     print(f"Designing primers for sequences in {sequence_file}")
     # Parse the sequence file
     sequences = SeqIO.parse(sequence_file, 'fasta')
@@ -133,12 +133,19 @@ def run(sequence_file, config_file, out_name, processes) -> None:
     with open(out_name + ".json", 'w') as file:
         json.dump(results, file)
 
+    print(f"Results saved to {out_name}.json")
     # Save main results to a csv file
-    columns = ['PENALTY', 'SEQUENCE', 'COORDS', 'TM', 'GC_PERCENT', 'END_STABILITY']
-    df_f = pd.concat([pd.DataFrame.from_records(res['PRIMER_LEFT'], columns=columns) for res in results])
-    df_r = pd.concat([pd.DataFrame.from_records(res['PRIMER_RIGHT'], columns=columns) for res in results])
-
-    df_f.reset_index().merge(df_r.reset_index(), on='index', suffixes=('_F', '_R')).to_csv(out_name + ".csv",
-                                                                                           index=False)
-
-    print(f"Results saved to {out_name}.json and {out_name}.csv")
+    if out_csv:
+        columns = ['PENALTY', 'SEQUENCE', 'COORDS', 'TM', 'GC_PERCENT', 'END_STABILITY']
+        df_f_list, df_r_list = [], []
+        for res in results:
+            if not res:
+                continue
+            df_f_list.append(
+                pd.DataFrame.from_records(res['PRIMER_LEFT'], columns=columns).assign(ID=res['SEQUENCE_ID']))
+            df_r_list.append(
+                pd.DataFrame.from_records(res['PRIMER_RIGHT'], columns=columns).assign(ID=res['SEQUENCE_ID']))
+        df_f = pd.concat(df_f_list)
+        df_r = pd.concat(df_r_list)
+        df_f.merge(df_r, on='ID', suffixes=('_F', '_R')).to_csv(out_name + ".csv", index=False)
+        print(f"Results saved to {out_name}.csv")

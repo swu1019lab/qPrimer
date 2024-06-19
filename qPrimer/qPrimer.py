@@ -28,6 +28,8 @@ def main():
                                help='Path to the Primer3 configuration file with ini format')
     design_parser.add_argument('--processes', type=int, default=1,
                                help='Number of processes to use')
+    design_parser.add_argument('--csv', action='store_true',
+                               help='Save the results to a CSV file')
 
     # Create a parser for the annotate module
     annotate_parser = subparsers.add_parser('annotate', help='Run annotate module')
@@ -73,7 +75,7 @@ def main():
         args.out_name = args.out_name + '_' + str(int(time.time()))
 
     if args.module == 'design':
-        design.run(args.seq_file, args.ini_file, args.out_name, args.processes)
+        design.run(args.seq_file, args.ini_file, args.out_name, args.csv, args.processes)
     elif args.module == 'annotate':
         annotate.run(args.primers, args.gtf_file, args.snp_file, args.out_name, args.processes)
     elif args.module == 'check':
