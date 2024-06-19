@@ -11,7 +11,7 @@ from Bio import SeqIO
 import os
 
 
-def run(primers, seq_file, out_name, genes_num=10):
+def run(primers, seq_file, out_name, genes_num):
     print('Visualize module is running.')
     # Load the primer results from a JSON file
     # primer_results = json.load(open('tests/qPrimer.json'))
@@ -23,13 +23,17 @@ def run(primers, seq_file, out_name, genes_num=10):
     columns = list(set(columns).intersection(set(primer_results[0]['PRIMER_PAIR'][0].keys())))
     df_p = pd.concat([pd.DataFrame.from_records(res['PRIMER_PAIR'], columns=columns) for res in primer_results])
     all_primers_num = df_p.shape[0]
-    best_primers_num = df_p.query('SPECIFICITY == 1').shape[0]
+    best_primers_num = df_p.query('SPECIFICITY == 1').shape[0] if 'SPECIFICITY' in df_p.columns else 0
 
     # left and right primers (need to check if the columns are exist)
     columns = ['PENALTY', 'TM', 'BOUND', 'GC_PERCENT', 'END_STABILITY', 'EXON_SPAN', 'SNP_SPAN']
     columns = list(set(columns).intersection(set(primer_results[0]['PRIMER_LEFT'][0].keys())))
     df_f = pd.concat([pd.DataFrame.from_records(res['PRIMER_LEFT'], columns=columns) for res in primer_results])
     df_r = pd.concat([pd.DataFrame.from_records(res['PRIMER_RIGHT'], columns=columns) for res in primer_results])
+    if 'EXON_SPAN' not in columns:
+        df_f['EXON_SPAN'], df_r['EXON_SPAN'] = 0, 0
+    if 'SNP_SPAN' not in columns:
+        df_f['SNP_SPAN'], df_r['SNP_SPAN'] = 0, 0
 
     # Parse the sequence file
     # sequences = SeqIO.parse('tests/test_cds.fa', 'fasta')
