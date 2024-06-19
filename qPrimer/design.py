@@ -142,10 +142,10 @@ def run(sequence_file, config_file, out_name, out_csv, processes) -> None:
             if not res:
                 continue
             df_f_list.append(
-                pd.DataFrame.from_records(res['PRIMER_LEFT'], columns=columns).assign(ID=res['SEQUENCE_ID']))
+                pd.DataFrame.from_records(res['PRIMER_LEFT'], columns=columns))
             df_r_list.append(
                 pd.DataFrame.from_records(res['PRIMER_RIGHT'], columns=columns).assign(ID=res['SEQUENCE_ID']))
-        df_f = pd.concat(df_f_list)
-        df_r = pd.concat(df_r_list)
-        df_f.merge(df_r, on='ID', suffixes=('_F', '_R')).to_csv(out_name + ".csv", index=False)
+        df_f, df_r = pd.concat(df_f_list, ignore_index=True), pd.concat(df_r_list, ignore_index=True)
+        df_f.reset_index().merge(df_r.reset_index(), on='index', suffixes=('_F', '_R')).to_csv(out_name + ".csv",
+                                                                                               index=False)
         print(f"Results saved to {out_name}.csv")

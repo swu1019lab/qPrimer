@@ -21,8 +21,11 @@ pip install dist/qprimer-1.0.4.tar.gz --user
 ## Example
 
 ```shell
-# Design primers
+# Design primers with default json output
 qPrimer design --seq_file test_cds.fa
+
+# Design primers with json and csv output
+qPrimer design --seq_file test_cds.fa --csv
 
 # Design primers with multiple CPUs
 qPrimer design --seq_file test_cds.fa --processes 4
