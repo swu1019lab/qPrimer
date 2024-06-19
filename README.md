@@ -48,7 +48,8 @@ qPrimer annotate \
 # --visualize requires the output from --design, --check, and --annotate
 qPrimer visualize \
 --primers qPrimer.json \
---seq_file test_cds.fa
+--seq_file test_cds.fa \
+--genes_num 10
 ```
 
 ![qPrimer_report-1](https://cdn.jsdelivr.net/gh/swu1019lab/md_img/qPrimer_report-1.jpeg)
