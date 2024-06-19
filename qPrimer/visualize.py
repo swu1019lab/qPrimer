@@ -24,6 +24,10 @@ def run(primers, seq_file, out_name, genes_num):
     df_p = pd.concat([pd.DataFrame.from_records(res['PRIMER_PAIR'], columns=columns) for res in primer_results])
     all_primers_num = df_p.shape[0]
     best_primers_num = df_p.query('SPECIFICITY == 1').shape[0] if 'SPECIFICITY' in df_p.columns else 0
+    if 'EXON_SPAN' not in columns:
+        df_p['EXON_SPAN'] = 0
+    if 'SNP_SPAN' not in columns:
+        df_p['SNP_SPAN'] = 0
 
     # left and right primers (need to check if the columns are exist)
     columns = ['PENALTY', 'TM', 'BOUND', 'GC_PERCENT', 'END_STABILITY', 'EXON_SPAN', 'SNP_SPAN']
