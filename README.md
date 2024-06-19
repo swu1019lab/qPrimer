@@ -18,6 +18,32 @@ python -m build
 pip install dist/qprimer-1.0.4.tar.gz --user
 ```
 
+## Usage
+
+```shell
+# Display help information
+qPrimer --help
+```
+
+```shell
+usage: qPrimer [-h] [--log_file LOG_FILE] [--out_name OUT_NAME] {design,annotate,check,visualize} ...
+
+Run qPrimer package.
+
+positional arguments:
+  {design,annotate,check,visualize}
+                        Specify the module to run
+    design              Run design module
+    annotate            Run annotate module
+    check               Run check module
+    visualize           Run visualize module
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --log_file LOG_FILE   Path to the log file
+  --out_name OUT_NAME   Prefix name of the output file
+```
+
 ## Example
 
 ```shell
