@@ -413,7 +413,7 @@
                                 </td>
                                 <td>{{ gene.get('PRIMER_PAIR_NUM_RETURNED') }}</td>
                                 <td>{{ gene.get('SEQUENCE_TEMPLATE')|length }}</td>
-                                <td>{{ gene.get('EXON_COORD')|length }}</td>
+                                <td>{{ gene.get('EXON_COORD', [])|length }}</td>
                                 <td>{{ gene.get('SNP_COORD')|length if gene.get('SNP_COORD') else 0 }}</td>
                                 <td>{{ gene.get('DATABASE') }}</td>
                             </tr>
