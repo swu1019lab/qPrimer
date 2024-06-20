@@ -18,7 +18,7 @@ def check_gtf(gtf_file) -> bool:
     :return: True if the file is a GTF file, False otherwise
     """
     i = 1
-    passed_list = [True, False, False, True]
+    passed_list = [True, False, False]
 
     # only check the first 1000 lines
     with open(gtf_file) as file:
@@ -30,12 +30,10 @@ def check_gtf(gtf_file) -> bool:
             fields = line.strip().split('\t')
             if len(fields) != 9:
                 passed_list[0] = False
-            if fields[2] == 'transcript':
+            if fields[2] == 'transcript' and fields[-1].find('transcript_id') > 0:
                 passed_list[1] = True
-            if fields[2] == 'exon':
+            if fields[2] == 'exon' and fields[-1].find('transcript_id') > 0:
                 passed_list[2] = True
-            if fields[-1].find('transcript_id') == -1:
-                passed_list[3] = False
             i += 1
     return all(passed_list)
 
