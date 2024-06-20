@@ -10,6 +10,36 @@ from collections import defaultdict
 import numpy as np
 
 
+def check_gtf(gtf_file) -> bool:
+    """
+    Check if a file is a GTF file.
+
+    :param gtf_file: a GTF file with gene annotation information
+    :return: True if the file is a GTF file, False otherwise
+    """
+    i = 1
+    passed_list = [True, False, False, True]
+
+    # only check the first 1000 lines
+    with open(gtf_file) as file:
+        for line in file:
+            if i >= 1000:
+                break
+            if line.startswith('#'):
+                continue
+            fields = line.strip().split('\t')
+            if len(fields) != 9:
+                passed_list[0] = False
+            if fields[2] == 'transcript':
+                passed_list[1] = True
+            if fields[2] == 'exon':
+                passed_list[2] = True
+            if fields[-1].find('transcript_id') == -1:
+                passed_list[3] = False
+            i += 1
+    return all(passed_list)
+
+
 def extract_coord_from_gtf(gtf_file) -> tuple:
     """
     Extract mrna/exon coordinates from a GTF file.
@@ -20,7 +50,7 @@ def extract_coord_from_gtf(gtf_file) -> tuple:
     mrna_coord = defaultdict(list)
     exon_coord = defaultdict(list)
 
-    if not gtf_file.endswith('.gtf'):
+    if not check_gtf(gtf_file):
         raise ValueError('The input file must be a GTF file.')
 
     with open(gtf_file) as file:
