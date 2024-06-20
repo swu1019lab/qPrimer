@@ -70,11 +70,7 @@ def run(primers, database, out_name, processes):
     with Pool(processes=processes) as pool:
         # Add the database to the primer results
         for i in range(len(primer_results)):
-            if not primer_results[i]:
-                # Remove empty results
-                del primer_results[i]
-            else:
-                primer_results[i]['DATABASE'] = database
+            primer_results[i]['DATABASE'] = database
         # Check the specificity of all primer pair of each sequence
         primer_results = pool.map(check_specificity, primer_results)
 

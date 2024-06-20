@@ -245,12 +245,9 @@ def run(primers, gtf_file, snp_file, out_name, processes=1):
     with multiprocessing.Pool(processes) as pool:
         # Add mrna and exon coordinates to the primer results
         for i in range(len(primer_results)):
-            if not primer_results[i]:
-                del primer_results[i]
-            else:
-                primer_results[i]['MRNA_COORD'] = mrna_coord[primer_results[i]['SEQUENCE_ID']]
-                primer_results[i]['EXON_COORD'] = exon_coord[primer_results[i]['SEQUENCE_ID']]
-                primer_results[i]['SNP_COORD'] = snp_coord[primer_results[i]['SEQUENCE_ID']]
+            primer_results[i]['MRNA_COORD'] = mrna_coord[primer_results[i]['SEQUENCE_ID']]
+            primer_results[i]['EXON_COORD'] = exon_coord[primer_results[i]['SEQUENCE_ID']]
+            primer_results[i]['SNP_COORD'] = snp_coord[primer_results[i]['SEQUENCE_ID']]
         # Annotate the exon span of all primer pair of each sequence
         primer_results = pool.map(annotate_exon_span, primer_results)
         # Annotate the snp span of all primer pair of each sequence

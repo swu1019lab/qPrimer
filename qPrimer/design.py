@@ -129,6 +129,15 @@ def run(sequence_file, config_file, out_name, out_csv, processes) -> None:
         # Design primers for each sequence
         results = pool.map(design_primers, sequences)
 
+    # Remove empty results
+    for i in range(len(results)):
+        if not results[i] or results[i]['PRIMER_PAIR_NUM_RETURNED'] == 0:
+            # Remove empty or failed results
+            del results[i]
+    if len(results) == 0:
+        print("No primers were designed!!!")
+        return
+
     # Save the results to a json file
     with open(out_name + ".json", 'w') as file:
         json.dump(results, file)
@@ -139,8 +148,6 @@ def run(sequence_file, config_file, out_name, out_csv, processes) -> None:
         columns = ['PENALTY', 'SEQUENCE', 'COORDS', 'TM', 'GC_PERCENT', 'END_STABILITY']
         df_f_list, df_r_list = [], []
         for res in results:
-            if not res:
-                continue
             df_f_list.append(
                 pd.DataFrame.from_records(res['PRIMER_LEFT'], columns=columns))
             df_r_list.append(
