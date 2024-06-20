@@ -130,11 +130,7 @@ def run(sequence_file, config_file, out_name, out_csv, processes) -> None:
         results = pool.map(design_primers, sequences)
 
     # Remove empty results
-    primer_results = results.copy()
-    for i in range(len(results)):
-        if not results[i] or results[i]['PRIMER_PAIR_NUM_RETURNED'] == 0:
-            # Remove empty or failed results
-            del primer_results[i]
+    primer_results = [res for res in results if not res or res['PRIMER_PAIR_NUM_RETURNED'] > 0]
     if len(primer_results) == 0:
         print("No primers were designed!!!")
         return
