@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "qPrimer"
-version = "1.0.4"
+version = "1.0.5"
 authors = [{ name = "Xiaodong Li", email = "lxd1997xy@163.com" }]
 description = "A python package for qPCR primers design, check, annotate and visualize."
 readme = "README.md"

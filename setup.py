@@ -17,7 +17,7 @@ for file in bin_files:
 
 setup(
     name='qPrimer',
-    version='1.0.4',
+    version='1.0.5',
     packages=find_packages(),
     entry_points={
         'console_scripts': [
