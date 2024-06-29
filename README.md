@@ -13,6 +13,7 @@ The qPrimer package is a collection of tools for designing, checking, annotating
     - [check module](#check-module)
     - [visualize module](#visualize-module)
 - [Example](#example)
+- [Citation](#citation)
 
 ## Dependencies
 - [In-Silico PCR (isPcr)](): A tool for checking primer specificity
