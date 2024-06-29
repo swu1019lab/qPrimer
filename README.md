@@ -4,8 +4,17 @@ The qPrimer package is a collection of tools for designing, checking, annotating
 
 ![qPrimer_pipeline](https://cdn.jsdelivr.net/gh/swu1019lab/md_img/graphical_abstract-2.png)
 
-## Dependencies
+## Contents
+- [Dependencies](#dependencies)
+- [Installation](#installation)
+- [Usage](#usage)
+    - [design module](#design-module)
+    - [annotate module](#annotate-module)
+    - [check module](#check-module)
+    - [visualize module](#visualize-module)
+- [Example](#example)
 
+## Dependencies
 - [In-Silico PCR (isPcr)](): A tool for checking primer specificity
 - Python 3.9+ and the following packages:
     - [biopython](https://biopython.org/): A set of tools for biological computation
