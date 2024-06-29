@@ -16,6 +16,7 @@ The qPrimer package is a collection of tools for designing, checking, annotating
 - [Output](#output)
 - [Example](#example)
 - [Citation](#citation)
+- [Questions](#questions)
 
 ## Dependencies
 
@@ -240,21 +241,11 @@ The output file contains the following three main sections:
 
 In addition to the json output, the results can also be output in csv format with the `--csv` option.
 
----
-The calculation of the penalty score is based on the following formula:
->
-> penalty =
 > The penalty score is used to evaluate the quality of the primer pair, and the primer pair with the lowest penalty
 > score is considered the best primer pair.
 
-The calculation of the stability of the 3' end of the primer is based on the following formula:
->
-> stability =
-> The stability score is used to evaluate the stability of the 3' end of the primer, and the primer with the lowest
-> stability score is considered the best primer.
-
-The calculation of the secondary structure of the primer is based on the following formula:
->
+> The stability score is used to evaluate the stability of the 3' end of the primer, and the primer with the highest
+> stability score is considered the most stable primer.
 
 ## Example
 
@@ -301,3 +292,16 @@ Kun Lu†, Tian Li†, Jian He†, Wei Chang†, Rui Zhang, Miao Liu, Mengna Yu,
 Liezhao Liu, Nannan Li, Ying Liang, Rui Wang, Wei Qian, Zhanglin Tang, Xinfu Xu, Bo Lei, Kai Zhang*, Jiana Li*.
 qPrimerDB: A thermodynamics-based gene-specific qPCR primer database for 147 organisms.
 Nucleic Acids Research. 2018, 46: D1229-D1236.
+
+## Questions
+
+1. How to calculate the penalty score of the primer pair?
+
+   The penalty score was calculated from Primer3, and the lower the penalty score, the better the primer pair. the
+   detailed calculation method can be found in the [Primer3 manual](https://primer3.org/manual.html#calculatePenalties).
+2. How to calculate the stability score of the 3' end of the primer?
+
+   The value is the maximum delta G (kcal/mol) for duplex disruption for the five 3' bases as calculated using the
+   nearest-neighbor parameter values specified by the option of melting temperature calculation. Bigger numbers mean
+   more stable 3' ends. The detailed calculation method can be found in
+   the [Primer3 manual]().
