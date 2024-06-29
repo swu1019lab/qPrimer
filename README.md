@@ -5,6 +5,7 @@ The qPrimer package is a collection of tools for designing, checking, annotating
 ![qPrimer_pipeline](https://cdn.jsdelivr.net/gh/swu1019lab/md_img/graphical_abstract-2.png)
 
 ## Contents
+
 - [Dependencies](#dependencies)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -17,6 +18,7 @@ The qPrimer package is a collection of tools for designing, checking, annotating
 - [Citation](#citation)
 
 ## Dependencies
+
 - [In-Silico PCR (isPcr)](): A tool for checking primer specificity
 - Python 3.9+ and the following packages:
     - [biopython](https://biopython.org/): A set of tools for biological computation
@@ -83,7 +85,9 @@ optional arguments:
   --csv                 Output the results in csv format
 ```
 
-default parameters setting (can ignore upper case and lower case) in the ini file:
+default parameters setting (can ignore upper case and lower case) in
+the [ini](https://docs.python.org/3/library/configparser.html) file:
+
 ```shell
 [GLOBAL]
 primer_task = generic
@@ -147,10 +151,10 @@ parameters specification:
 - primer_max_end_stability: 9, maximum stability of the 3' end of the primer
 
 parameters references:
->- Jeon H, Bae J, Hwang SH, et al. MRPrimerW2: an enhanced tool for rapid design of valid high-quality primers with
-  multiple search modes for qPCR experiments. *Nucleic Acids Res*. 2019;47(W1):W614-W622. doi:10.1093/nar/gkz323
+> - Jeon H, Bae J, Hwang SH, et al. MRPrimerW2: an enhanced tool for rapid design of valid high-quality primers with
+    multiple search modes for qPCR experiments. *Nucleic Acids Res*. 2019;47(W1):W614-W622. doi:10.1093/nar/gkz323
 >- Lu K, Li T, He J, et al. qPrimerDB: a thermodynamics-based gene-specific qPCR primer database for 147 organisms.
-  *Nucleic Acids Res*. 2018;46(D1):D1229-D1236. doi:10.1093/nar/gkx725
+   *Nucleic Acids Res*. 2018;46(D1):D1229-D1236. doi:10.1093/nar/gkx725
 
 custom parameters setting for qPCR and other applications:
 > All the parameters from Primer3 can be set in the ini file, and the default parameters are set for qPCR. The
@@ -199,52 +203,53 @@ optional arguments:
 ```
 
 ## Output
-The default output format is json, and the output file is named `qPrimer.json`. 
+
+The default output format is json, and the output file is named `qPrimer.json`.
 The output file contains the following three main sections:
 
 1. Primer pair
-   - **PENALTY**: The penalty score of the primer pair
-   - **PRODUCT_SIZE**: The product size of the primer pair
-   - **PRODUCT_TM**: The product melting temperature of the primer pair
-   - **COMPL_ANY_TH**: The calculated value for the tendency of a primer pair to bind to each other
-   - **COMPL_END_TH**: The calculated value for the tendency of the 3'-ENDs of a primer pair to bind to each other.
+    - **PENALTY**: The penalty score of the primer pair
+    - **PRODUCT_SIZE**: The product size of the primer pair
+    - **PRODUCT_TM**: The product melting temperature of the primer pair
+    - **COMPL_ANY_TH**: The calculated value for the tendency of a primer pair to bind to each other
+    - **COMPL_END_TH**: The calculated value for the tendency of the 3'-ENDs of a primer pair to bind to each other.
 
 2. Left primer
-   - **PENALTY**: The penalty score of the left primer
-   - **SEQUENCE**: The sequence of the left primer
-   - **COORDS**: The coordinates of the left primer
-   - **TM**: The melting temperature of the left primer
-   - **BOUND**: The fraction of primers bound at annealing temperature
-   - **GC_PERCENT**: The GC content of the left primer
-   - **END_STABILITY**: The stability of the 3' end of the left primer
-   - **SELF_ANY_STUCT**: A string representation of the calculated secondary structure
-   - **SELF_END_STUCT**: A string representation of the calculated secondary structure
-   - **HAIRPIN_STUCT**: A string representation of the calculated secondary structure
+    - **PENALTY**: The penalty score of the left primer
+    - **SEQUENCE**: The sequence of the left primer
+    - **COORDS**: The coordinates of the left primer
+    - **TM**: The melting temperature of the left primer
+    - **BOUND**: The fraction of primers bound at annealing temperature
+    - **GC_PERCENT**: The GC content of the left primer
+    - **END_STABILITY**: The stability of the 3' end of the left primer
+    - **SELF_ANY_STUCT**: A string representation of the calculated secondary structure
+    - **SELF_END_STUCT**: A string representation of the calculated secondary structure
+    - **HAIRPIN_STUCT**: A string representation of the calculated secondary structure
 
 3. Right primer
-   - **PENALTY**: The penalty score of the right primer
-   - **SEQUENCE**: The sequence of the right primer
-   - **COORDS**: The coordinates of the right primer
-   - **TM**: The melting temperature of the right primer
-   - **BOUND**: The fraction of primers bound at annealing temperature
-   - **GC_PERCENT**: The GC content of the right primer
-   - **END_STABILITY**: The stability of the 3' end of the right primer
-   - **SELF_ANY_STUCT**: A string representation of the calculated secondary structure
-   - **SELF_END_STUCT**: A string representation of the calculated secondary structure
-   - **HAIRPIN_STUCT**: A string representation of the calculated secondary structure
+    - **PENALTY**: The penalty score of the right primer
+    - **SEQUENCE**: The sequence of the right primer
+    - **COORDS**: The coordinates of the right primer
+    - **TM**: The melting temperature of the right primer
+    - **BOUND**: The fraction of primers bound at annealing temperature
+    - **GC_PERCENT**: The GC content of the right primer
+    - **END_STABILITY**: The stability of the 3' end of the right primer
+    - **SELF_ANY_STUCT**: A string representation of the calculated secondary structure
+    - **SELF_END_STUCT**: A string representation of the calculated secondary structure
+    - **HAIRPIN_STUCT**: A string representation of the calculated secondary structure
 
 In addition to the json output, the results can also be output in csv format with the `--csv` option.
 
 ---
 The calculation of the penalty score is based on the following formula:
-> 
-> penalty = 
+>
+> penalty =
 > The penalty score is used to evaluate the quality of the primer pair, and the primer pair with the lowest penalty
 > score is considered the best primer pair.
 
 The calculation of the stability of the 3' end of the primer is based on the following formula:
 >
-> stability = 
+> stability =
 > The stability score is used to evaluate the stability of the 3' end of the primer, and the primer with the lowest
 > stability score is considered the best primer.
 
