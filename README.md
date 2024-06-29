@@ -12,6 +12,7 @@ The qPrimer package is a collection of tools for designing, checking, annotating
     - [annotate module](#annotate-module)
     - [check module](#check-module)
     - [visualize module](#visualize-module)
+- [Output](#output)
 - [Example](#example)
 - [Citation](#citation)
 
@@ -197,6 +198,59 @@ optional arguments:
                         Number of genes to display
 ```
 
+## Output
+The default output format is json, and the output file is named `qPrimer.json`. 
+The output file contains the following three main sections:
+
+1. Primer pair
+   - **PENALTY**: The penalty score of the primer pair
+   - **PRODUCT_SIZE**: The product size of the primer pair
+   - **PRODUCT_TM**: The product melting temperature of the primer pair
+   - **COMPL_ANY_TH**: The calculated value for the tendency of a primer pair to bind to each other
+   - **COMPL_END_TH**: The calculated value for the tendency of the 3'-ENDs of a primer pair to bind to each other.
+
+2. Left primer
+   - **PENALTY**: The penalty score of the left primer
+   - **SEQUENCE**: The sequence of the left primer
+   - **COORDS**: The coordinates of the left primer
+   - **TM**: The melting temperature of the left primer
+   - **BOUND**: The fraction of primers bound at annealing temperature
+   - **GC_PERCENT**: The GC content of the left primer
+   - **END_STABILITY**: The stability of the 3' end of the left primer
+   - **SELF_ANY_STUCT**: A string representation of the calculated secondary structure
+   - **SELF_END_STUCT**: A string representation of the calculated secondary structure
+   - **HAIRPIN_STUCT**: A string representation of the calculated secondary structure
+
+3. Right primer
+   - **PENALTY**: The penalty score of the right primer
+   - **SEQUENCE**: The sequence of the right primer
+   - **COORDS**: The coordinates of the right primer
+   - **TM**: The melting temperature of the right primer
+   - **BOUND**: The fraction of primers bound at annealing temperature
+   - **GC_PERCENT**: The GC content of the right primer
+   - **END_STABILITY**: The stability of the 3' end of the right primer
+   - **SELF_ANY_STUCT**: A string representation of the calculated secondary structure
+   - **SELF_END_STUCT**: A string representation of the calculated secondary structure
+   - **HAIRPIN_STUCT**: A string representation of the calculated secondary structure
+
+In addition to the json output, the results can also be output in csv format with the `--csv` option.
+
+---
+The calculation of the penalty score is based on the following formula:
+> 
+> penalty = 
+> The penalty score is used to evaluate the quality of the primer pair, and the primer pair with the lowest penalty
+> score is considered the best primer pair.
+
+The calculation of the stability of the 3' end of the primer is based on the following formula:
+>
+> stability = 
+> The stability score is used to evaluate the stability of the 3' end of the primer, and the primer with the lowest
+> stability score is considered the best primer.
+
+The calculation of the secondary structure of the primer is based on the following formula:
+>
+
 ## Example
 
 ```shell
@@ -224,7 +278,6 @@ qPrimer annotate \
 --snp_file test_snps.bed
 
 # Visualize primers results with a html page
-# --visualize requires the output from --design, --check, and --annotate
 qPrimer visualize \
 --primers qPrimer.json \
 --seq_file test_cds.fa \
