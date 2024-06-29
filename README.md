@@ -124,32 +124,32 @@ PRIMER_MAX_END_STABILITY = 9
 
 parameters specification:
 
-- primer_task: generic
-- primer_num_return: 10, number of primer pairs to return
-- primer_pick_left_primer: 1, whether to pick the left primer, 0 or 1
-- primer_pick_right_primer: 1, whether to pick the right primer, 0 or 1
-- primer_min_gc: 40, minimum GC content, 0-100
-- primer_max_gc: 60, maximum GC content, 0-100
-- primer_opt_gc_percent: 50, optimal GC content, 0-100
-- primer_opt_size: 22, optimal primer length
-- primer_min_size: 18, minimum primer length
-- primer_max_size: 28, maximum primer length
-- primer_opt_tm: 60, optimal melting temperature
-- primer_min_tm: 58, minimum melting temperature
-- primer_max_tm: 64, maximum melting temperature
-- primer_pair_max_diff_tm: 3, maximum difference in melting temperature between the left and right primers
-- primer_product_size_range: 80-300, range of product size, e.g., 80-300 or 100-200, 300-400
-- primer_explain_flag: 1, whether to include the explanation of the primer
-- primer_thermodynamic_oligo_alignment: 1, whether to use thermodynamic oligo alignment
-- primer_secondary_structure_alignment: 1, whether to use secondary structure alignment
-- primer_annealing_temp: 50, annealing temperature
-- primer_max_poly_x: 5, maximum number of consecutive G/C/T/A in the primer
-- primer_max_self_any: 4, maximum self-complementarity
-- primer_max_self_end: 3, maximum self-complementarity at the 3' end
-- primer_pair_max_compl_any: 4, maximum complementarity between the left and right primers
-- primer_pair_max_compl_end: 3, maximum complementarity between the 3' end of the left primer and the 3' end of the
+- **primer_task**: generic
+- **primer_num_return**: 10, number of primer pairs to return
+- **primer_pick_left_primer**: 1, whether to pick the left primer, 0 or 1
+- **primer_pick_right_primer**: 1, whether to pick the right primer, 0 or 1
+- **primer_min_gc**: 40, minimum GC content, 0-100
+- **primer_max_gc**: 60, maximum GC content, 0-100
+- **primer_opt_gc_percent**: 50, optimal GC content, 0-100
+- **primer_opt_size**: 22, optimal primer length
+- **primer_min_size**: 18, minimum primer length
+- **primer_max_size**: 28, maximum primer length
+- **primer_opt_tm**: 60, optimal melting temperature
+- **primer_min_tm**: 58, minimum melting temperature
+- **primer_max_tm**: 64, maximum melting temperature
+- **primer_pair_max_diff_tm**: 3, maximum difference in melting temperature between the left and right primers
+- **primer_product_size_range**: 80-300, range of product size, e.g., 80-300 or 100-200, 300-400
+- **primer_explain_flag**: 1, whether to include the explanation of the primer
+- **primer_thermodynamic_oligo_alignment**: 1, whether to make thermodynamic secondary structure calculations
+- **primer_secondary_structure_alignment**: 1, whether to print out the calculated secondary structures
+- **primer_annealing_temp**: 50, annealing temperature
+- **primer_max_poly_x**: 5, maximum number of consecutive G/C/T/A in the primer
+- **primer_max_self_any**: 4, maximum self-complementarity
+- **primer_max_self_end**: 3, maximum self-complementarity at the 3' end
+- **primer_pair_max_compl_any**: 4, maximum complementarity between the left and right primers
+- **primer_pair_max_compl_end**: 3, maximum complementarity between the 3' end of the left primer and the 3' end of the
   right primer
-- primer_max_end_stability: 9, maximum stability of the 3' end of the primer
+- **primer_max_end_stability**: 9, maximum stability of the 3' end of the primer
 
 parameters references:
 > - Jeon H, Bae J, Hwang SH, et al. MRPrimerW2: an enhanced tool for rapid design of valid high-quality primers with
@@ -288,20 +288,30 @@ qPrimer visualize \
 
 If you use qPrimer and qPrimerDB, please cite the following paper:
 
-Kun Lu†, Tian Li†, Jian He†, Wei Chang†, Rui Zhang, Miao Liu, Mengna Yu, Yonghai Fan, Jinqi Ma, Wei Sun, Cunmin Qu,
-Liezhao Liu, Nannan Li, Ying Liang, Rui Wang, Wei Qian, Zhanglin Tang, Xinfu Xu, Bo Lei, Kai Zhang*, Jiana Li*.
-qPrimerDB: A thermodynamics-based gene-specific qPCR primer database for 147 organisms.
-Nucleic Acids Research. 2018, 46: D1229-D1236.
+> Lu K, Li T, He J, et al. qPrimerDB: a thermodynamics-based gene-specific qPCR primer database for 147 organisms.
+> *Nucleic Acids Res*. 2018;46(D1):D1229-D1236. doi:10.1093/nar/gkx725
 
 ## Questions
 
-1. How to calculate the penalty score of the primer pair?
+1. How to calculate the penalty values of the primer pair?
 
-   The penalty score was calculated from Primer3, and the lower the penalty score, the better the primer pair. the
-   detailed calculation method can be found in the [Primer3 manual](https://primer3.org/manual.html#calculatePenalties).
-2. How to calculate the stability score of the 3' end of the primer?
+   The penalty values define what is the best primer pair, and the lower the penalty score, the better the primer pair.
+   the detailed calculation method can be found in
+   the [Primer3 manual](https://primer3.org/manual.html#calculatePenalties). Simply, the penalty score is calculated by
+   the sum of penalty weight of different parameters, such as the melting temperature, GC content, primer length,
+   secondary
+   structure, etc. Users can set the penalty weight of different parameters in the ini file.
+
+2. How to calculate the stability values of the 3' end of the primer?
 
    The value is the maximum delta G (kcal/mol) for duplex disruption for the five 3' bases as calculated using the
    nearest-neighbor parameter values specified by the option of melting temperature calculation. Bigger numbers mean
    more stable 3' ends. The detailed calculation method can be found in
-   the [Primer3 manual]().
+   the [Primer3 manual](https://primer3.org/manual.html#PRIMER_MAX_END_STABILITY). Users can set the maximum stability
+   value in the ini file.
+3. How to calculate the secondary structure of the primer?
+
+   The secondary structure of the primer is calculated by the nearest-neighbor method. The detailed calculation method
+   can be found in the [Primer3 manual](https://primer3.org/manual.html#PRIMER_MAX_SELF_ANY_TH). Users
+   can get the secondary structure of the primer by setting the parameter `primer_thermodynamic_oligo_alignment` to `1`
+   in the ini file.
