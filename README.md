@@ -20,7 +20,7 @@ The qPrimer package is a collection of tools for designing, checking, annotating
 
 ## Dependencies
 
-- [In-Silico PCR (isPcr)](): A tool for checking primer specificity
+- [In-Silico PCR (isPcr)](https://genome.ucsc.edu/cgi-bin/hgPcr): A tool for checking primer specificity
 - Python 3.9+ and the following packages:
     - [biopython](https://biopython.org/): A set of tools for biological computation
     - [pandas](https://pandas.pydata.org/): A fast, powerful, flexible, and easy-to-use open-source data analysis and
