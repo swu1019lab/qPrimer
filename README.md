@@ -299,8 +299,7 @@ If you use qPrimer and qPrimerDB, please cite the following paper:
    the detailed calculation method can be found in
    the [Primer3 manual](https://primer3.org/manual.html#calculatePenalties). Simply, the penalty score is calculated by
    the sum of penalty weight of different parameters, such as the melting temperature, GC content, primer length,
-   secondary
-   structure, etc. Users can set the penalty weight of different parameters in the ini file.
+   secondary structure, etc. Users can set the penalty weight of different parameters in the ini file.
 
 2. How to calculate the stability values of the 3' end of the primer?
 
@@ -309,6 +308,7 @@ If you use qPrimer and qPrimerDB, please cite the following paper:
    more stable 3' ends. The detailed calculation method can be found in
    the [Primer3 manual](https://primer3.org/manual.html#PRIMER_MAX_END_STABILITY). Users can set the maximum stability
    value in the ini file.
+
 3. How to calculate the secondary structure of the primer?
 
    The secondary structure of the primer is calculated by the nearest-neighbor method. The detailed calculation method
