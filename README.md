@@ -58,7 +58,7 @@ optional arguments:
   --out_name OUT_NAME   Prefix name of the output file
 ```
 
-### design module:
+### design module
 
 ```shell
 usage: qPrimer design [-h] --seq_file SEQ_FILE [--ini_file INI_FILE] [--processes PROCESSES] [--csv]
@@ -146,7 +146,7 @@ custom parameters setting for qPCR and other applications:
 > users can modify the parameters in the ini file to meet the specific requirements of the primer design not only for
 > qPCR but also for other applications.
 
-### annotate module:
+### annotate module
 
 ```shell
   
@@ -161,7 +161,7 @@ optional arguments:
                         Number of CPUs to use
 ```
 
-### check module:
+### check module
 
 ```shell
 usage: qPrimer check [-h] --primers PRIMERS --database DATABASE
@@ -174,7 +174,7 @@ optional arguments:
                         Number of CPUs to use
 ```
 
-### visualize module:
+### visualize module
 
 ```shell
 usage: qPrimer visualize [-h] --primers PRIMERS --seq_file SEQ_FILE --genes_num GENES_NUM
