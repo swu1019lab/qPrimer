@@ -30,12 +30,6 @@ The qPrimer package is a collection of tools for designing, checking, annotating
     - [jinja2](https://jinja.palletsprojects.com/): A fast, expressive, extensible templating engine
 
 ## Installation
-
-```shell
-# install the package from pip
-pip install qPrimer
-```
-
 ```shell
 # install the package from source
 git clone https://github.com/swu1019lab/qPrimer.git
@@ -43,7 +37,7 @@ cd qPrimer
 # install the package using build and pip commands
 pip install build --user
 python -m build
-pip install dist/qprimer-1.0.4.tar.gz --user
+pip install dist/qprimer-1.0.5.tar.gz --user
 ```
 
 ## Usage
