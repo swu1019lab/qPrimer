@@ -129,8 +129,8 @@ def run(sequence_file, config_file, out_name, out_csv, processes) -> None:
         # Design primers for each sequence
         results = pool.map(design_primers, sequences)
 
-    # Remove empty results
-    primer_results = [res for res in results if not res or res['PRIMER_PAIR_NUM_RETURNED'] > 0]
+    # Remove empty results: like sequences that are too short or have no primers
+    primer_results = [res for res in results if res or res['PRIMER_PAIR_NUM_RETURNED'] > 0]
     if len(primer_results) == 0:
         print("No primers were designed!!!")
         return
