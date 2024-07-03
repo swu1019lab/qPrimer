@@ -21,9 +21,15 @@ def run(primers, seq_file, out_name, genes_num):
     # primer pairs (need to check if the columns are exist)
     columns = ['PENALTY', 'PRODUCT_SIZE', 'PRODUCT_TM', 'EXON_SPAN', 'SNP_SPAN', 'SPECIFICITY']
     columns = list(set(columns).intersection(set(primer_results[0]['PRIMER_PAIR'][0].keys())))
-    df_p = pd.concat([pd.DataFrame.from_records(res['PRIMER_PAIR'], columns=columns) for res in primer_results])
+    df_p = pd.concat(
+        [
+            pd.DataFrame.from_records(res['PRIMER_PAIR'], columns=columns).assign(ID=res['SEQUENCE_ID']) for res in
+            primer_results
+        ]
+    )
     all_primers_num = df_p.shape[0]
     best_primers_num = df_p.query('SPECIFICITY == 1').shape[0] if 'SPECIFICITY' in df_p.columns else 0
+    cover_genes_num = len(df_p.query('SPECIFICITY == 1')['ID'].unique()) if 'SPECIFICITY' in df_p.columns else 0
     if 'EXON_SPAN' not in columns:
         df_p['EXON_SPAN'] = 0
     if 'SNP_SPAN' not in columns:
@@ -89,9 +95,10 @@ def run(primers, seq_file, out_name, genes_num):
     ]
 
     design_summary = {
-        'gene_num': len(primer_results),
-        'all_primers_num': all_primers_num,
-        'best_primers_num': best_primers_num,
+        'gene_num': format(len(primer_results), ","),  # format with comma
+        'all_primers_num': format(all_primers_num, ","),
+        'best_primers_num': format(best_primers_num, ","),
+        'cover_genes_num': format(cover_genes_num, ","),
         'specificity_rate': round(best_primers_num / all_primers_num * 100, 2),
         'primer_pairs_per_gene': round(all_primers_num / seq_num, 2),
         'success_rate': round(len(primer_results) / seq_num * 100, 2),

@@ -143,6 +143,31 @@
             box-sizing: border-box;
         }
 
+        .status {
+            --tblr-status-height: 1.5rem;
+            --tblr-status-color: #667382;
+            --tblr-status-color-rgb: 102, 115, 130;
+            display: inline-flex;
+            align-items: center;
+            height: var(--tblr-status-height);
+            padding: .25rem .75rem;
+            gap: .5rem;
+            color: var(--tblr-status-color);
+            background: rgba(var(--tblr-status-color-rgb), .1);
+            font-size: .875rem;
+            text-transform: none;
+            letter-spacing: normal;
+            border-radius: 100rem;
+            font-weight: var(--tblr-font-weight-medium);
+            line-height: 1;
+            margin: 0;
+        }
+
+        .status-green {
+            --tblr-status-color: #2fb344;
+            --tblr-status-color-rgb: 47, 179, 68;
+        }
+
         .progress-sm {
             height: .25rem;
         }
@@ -199,10 +224,10 @@
     <div class="container">
         <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <a href="https://qprimerdb.biodb.org/index">
-              <img src="https://qprimerdb.biodb.org/static/logo.741248ee.svg" width="110" height="32" alt="qPrimerDB"
-                   class="navbar-brand-image">
+                <img src="https://qprimerdb.biodb.org/static/logo.741248ee.svg" width="110" height="32" alt="qPrimerDB"
+                     class="navbar-brand-image">
             </a>
-          </h1>
+        </h1>
     </div>
 </header>
 
@@ -271,7 +296,20 @@
                     <div class="card-status-top bg-red"></div>
                     <div class="ribbon bg-red">NEW</div>
                     <div class="subheader">Best Primer pairs</div>
-                    <div class="h1 mb-3 me-2">100</div>
+                    <div class="d-flex align-items-baseline mb-3">
+                        <div class="h1 mb-0 me-2">100</div>
+                        <div class="me-auto">
+                            <span class="status status-green d-inline-flex align-items-center lh-1">
+                                4444444 genes
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon me-1 text-success" width="24"
+                                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M5 12l5 5l10 -10"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
                     <div class="d-flex mb-2">
                         <div>Percentage</div>
                         <div class="ms-auto">
@@ -393,7 +431,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            
+
                             <tr>
                                 <td data-checkbox="true"></td>
                                 <td><span class="text-muted">1</span></td>
@@ -408,7 +446,7 @@
                                 <td>0</td>
                                 <td>test_cds.fa</td>
                             </tr>
-                            
+
                             <tr>
                                 <td data-checkbox="true"></td>
                                 <td><span class="text-muted">2</span></td>
@@ -423,7 +461,7 @@
                                 <td>0</td>
                                 <td>test_cds.fa</td>
                             </tr>
-                            
+
                             <tr>
                                 <td data-checkbox="true"></td>
                                 <td><span class="text-muted">3</span></td>
@@ -438,7 +476,7 @@
                                 <td>0</td>
                                 <td>test_cds.fa</td>
                             </tr>
-                            
+
                             <tr>
                                 <td data-checkbox="true"></td>
                                 <td><span class="text-muted">4</span></td>
@@ -453,7 +491,7 @@
                                 <td>0</td>
                                 <td>test_cds.fa</td>
                             </tr>
-                            
+
                             <tr>
                                 <td data-checkbox="true"></td>
                                 <td><span class="text-muted">5</span></td>
@@ -468,7 +506,7 @@
                                 <td>0</td>
                                 <td>test_cds.fa</td>
                             </tr>
-                            
+
                             </tbody>
                         </table>
                     </div>
@@ -478,7 +516,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-12" id="BnaA01g00010D">
             <div class="card h-100">
                 <div class="card-header">
@@ -512,7 +550,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            
+
                             <tr>
                                 <td>1</td>
                                 <td>
@@ -551,7 +589,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>2</td>
                                 <td>
@@ -590,7 +628,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>3</td>
                                 <td>
@@ -629,7 +667,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>4</td>
                                 <td>
@@ -668,7 +706,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>5</td>
                                 <td>
@@ -707,7 +745,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>6</td>
                                 <td>
@@ -746,7 +784,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>7</td>
                                 <td>
@@ -785,7 +823,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>8</td>
                                 <td>
@@ -824,7 +862,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>9</td>
                                 <td>
@@ -863,7 +901,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>10</td>
                                 <td>
@@ -902,7 +940,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             </tbody>
                         </table>
                     </div>
@@ -912,7 +950,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-12" id="BnaA01g00020D">
             <div class="card h-100">
                 <div class="card-header">
@@ -946,7 +984,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            
+
                             <tr>
                                 <td>1</td>
                                 <td>
@@ -985,7 +1023,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>2</td>
                                 <td>
@@ -1024,7 +1062,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>3</td>
                                 <td>
@@ -1063,7 +1101,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>4</td>
                                 <td>
@@ -1102,7 +1140,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>5</td>
                                 <td>
@@ -1141,7 +1179,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>6</td>
                                 <td>
@@ -1180,7 +1218,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>7</td>
                                 <td>
@@ -1219,7 +1257,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>8</td>
                                 <td>
@@ -1258,7 +1296,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>9</td>
                                 <td>
@@ -1297,7 +1335,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>10</td>
                                 <td>
@@ -1336,7 +1374,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             </tbody>
                         </table>
                     </div>
@@ -1346,7 +1384,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-12" id="BnaA01g00030D">
             <div class="card h-100">
                 <div class="card-header">
@@ -1380,7 +1418,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            
+
                             <tr>
                                 <td>1</td>
                                 <td>
@@ -1419,7 +1457,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>2</td>
                                 <td>
@@ -1458,7 +1496,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>3</td>
                                 <td>
@@ -1497,7 +1535,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>4</td>
                                 <td>
@@ -1536,7 +1574,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>5</td>
                                 <td>
@@ -1575,7 +1613,7 @@
                                 <td>2</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>6</td>
                                 <td>
@@ -1614,7 +1652,7 @@
                                 <td>2</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>7</td>
                                 <td>
@@ -1653,7 +1691,7 @@
                                 <td>2</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>8</td>
                                 <td>
@@ -1692,7 +1730,7 @@
                                 <td>2</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>9</td>
                                 <td>
@@ -1731,7 +1769,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>10</td>
                                 <td>
@@ -1770,7 +1808,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             </tbody>
                         </table>
                     </div>
@@ -1780,7 +1818,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-12" id="BnaA01g00040D">
             <div class="card h-100">
                 <div class="card-header">
@@ -1814,7 +1852,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            
+
                             <tr>
                                 <td>1</td>
                                 <td>
@@ -1853,7 +1891,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>2</td>
                                 <td>
@@ -1892,7 +1930,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>3</td>
                                 <td>
@@ -1931,7 +1969,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>4</td>
                                 <td>
@@ -1970,7 +2008,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>5</td>
                                 <td>
@@ -2009,7 +2047,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>6</td>
                                 <td>
@@ -2048,7 +2086,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>7</td>
                                 <td>
@@ -2087,7 +2125,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>8</td>
                                 <td>
@@ -2126,7 +2164,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>9</td>
                                 <td>
@@ -2165,7 +2203,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>10</td>
                                 <td>
@@ -2204,7 +2242,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             </tbody>
                         </table>
                     </div>
@@ -2214,7 +2252,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-12" id="BnaA01g00050D">
             <div class="card h-100">
                 <div class="card-header">
@@ -2248,7 +2286,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            
+
                             <tr>
                                 <td>1</td>
                                 <td>
@@ -2287,7 +2325,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>2</td>
                                 <td>
@@ -2326,7 +2364,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>3</td>
                                 <td>
@@ -2365,7 +2403,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>4</td>
                                 <td>
@@ -2404,7 +2442,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>5</td>
                                 <td>
@@ -2443,7 +2481,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>6</td>
                                 <td>
@@ -2482,7 +2520,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>7</td>
                                 <td>
@@ -2521,7 +2559,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>8</td>
                                 <td>
@@ -2560,7 +2598,7 @@
                                 <td>0</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>9</td>
                                 <td>
@@ -2599,7 +2637,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>10</td>
                                 <td>
@@ -2638,7 +2676,7 @@
                                 <td>1</td>
                                 <td>1</td>
                             </tr>
-                            
+
                             </tbody>
                         </table>
                     </div>
@@ -2648,7 +2686,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </div>
 
@@ -2740,7 +2778,12 @@
     window.addEventListener('resize', function () {
         myChart2.resize();
     });
-    const data = [{"index": 0, "Primer pairs": 59.0, "Left primers": 98.0, "Right primers": 96.0}, {"index": 1, "Primer pairs": 33.0, "Left primers": 2.0, "Right primers": 4.0}, {"index": 2, "Primer pairs": 8.0, "Left primers": NaN, "Right primers": NaN}]
+    const data = [{"index": 0, "Primer pairs": 59.0, "Left primers": 98.0, "Right primers": 96.0}, {
+        "index": 1,
+        "Primer pairs": 33.0,
+        "Left primers": 2.0,
+        "Right primers": 4.0
+    }, {"index": 2, "Primer pairs": 8.0, "Left primers": NaN, "Right primers": NaN}]
     // configure option
     const option2 = {
         title: [

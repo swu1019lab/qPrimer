@@ -44,7 +44,7 @@ def check_specificity(primer_result):
     # Define the isPCR query
     query = StringIO()
     # Parse all primer results from one sequence
-    name = primer_result['SEQUENCE_ID']
+    # name = primer_result['SEQUENCE_ID']
     database = primer_result['DATABASE']
     for i in range(primer_result['PRIMER_PAIR_NUM_RETURNED']):
         forward_primer = primer_result['PRIMER_LEFT'][i]['SEQUENCE']

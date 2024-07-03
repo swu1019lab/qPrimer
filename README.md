@@ -37,7 +37,7 @@ cd qPrimer
 # install the package using build and pip commands
 pip install build --user
 python -m build
-pip install dist/qprimer-1.0.5.tar.gz --user
+pip install dist/qprimer-1.0.6.tar.gz --user
 ```
 
 ## Usage

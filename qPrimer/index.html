@@ -152,6 +152,31 @@
             box-sizing: border-box;
         }
 
+        .status {
+            --tblr-status-height: 1.5rem;
+            --tblr-status-color: #667382;
+            --tblr-status-color-rgb: 102, 115, 130;
+            display: inline-flex;
+            align-items: center;
+            height: var(--tblr-status-height);
+            padding: .25rem .75rem;
+            gap: .5rem;
+            color: var(--tblr-status-color);
+            background: rgba(var(--tblr-status-color-rgb), .1);
+            font-size: .675rem;
+            text-transform: none;
+            letter-spacing: normal;
+            border-radius: 100rem;
+            font-weight: var(--tblr-font-weight-medium);
+            line-height: 1;
+            margin: 0;
+        }
+
+        .status-green {
+            --tblr-status-color: #2fb344;
+            --tblr-status-color-rgb: 47, 179, 68;
+        }
+
         .progress-sm {
             height: .25rem;
         }
@@ -280,7 +305,20 @@
                     <div class="card-status-top bg-red"></div>
                     <div class="ribbon bg-red">NEW</div>
                     <div class="subheader">Best Primer pairs</div>
-                    <div class="h1 mb-3 me-2">{{ summary.get('best_primers_num') }}</div>
+                    <div class="d-flex mb-3">
+                        <div class="h1 mb-0 me-2">{{ summary.get('best_primers_num') }}</div>
+                        <div class="me-auto">
+                            <span class="status status-green d-inline-flex align-items-center lh-1">
+                                {{ summary.get('cover_genes_num') }} genes
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon me-1 text-success" width="24"
+                                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M5 12l5 5l10 -10"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
                     <div class="d-flex mb-2">
                         <div>Percentage</div>
                         <div class="ms-auto">

@@ -14,12 +14,9 @@ from . import design, annotate, check, visualize  # import your modules
 def main():
     # Create a parser for the main command
     parser = argparse.ArgumentParser(description='Run qPrimer package.')
-    parser.add_argument('--log_file', type=str, default='qPrimer.log', help='Path to the log file')
-    parser.add_argument('--out_name', type=str, default='qPrimer',
-                        help='Prefix name of the output file')
+    parser.add_argument('--version', action='version', version='%(prog)s 1.0.6')
 
     subparsers = parser.add_subparsers(dest='module', help='Specify the module to run')
-
     # Create a parser for the design module
     design_parser = subparsers.add_parser('design', help='Run design module')
     design_parser.add_argument('--seq_file', required=True, type=str,
@@ -30,6 +27,9 @@ def main():
                                help='Number of processes to use')
     design_parser.add_argument('--csv', action='store_true',
                                help='Save the results to a CSV file')
+    design_parser.add_argument('--log_file', type=str, default='qPrimer.log', help='Path to the log file')
+    design_parser.add_argument('--out_name', type=str, default='qPrimer',
+                               help='Prefix name of the output file')
 
     # Create a parser for the annotate module
     annotate_parser = subparsers.add_parser('annotate', help='Run annotate module')
@@ -41,6 +41,9 @@ def main():
                                  help='Path to the SNP file with bed format')
     annotate_parser.add_argument('--processes', type=int, default=1,
                                  help='Number of processes to use')
+    annotate_parser.add_argument('--log_file', type=str, default='qPrimer.log', help='Path to the log file')
+    annotate_parser.add_argument('--out_name', type=str, default='qPrimer',
+                                 help='Prefix name of the output file')
 
     # Create a parser for the check module
     check_parser = subparsers.add_parser('check', help='Run check module')
@@ -50,6 +53,9 @@ def main():
                               help='Path to the database file with fasta format')
     check_parser.add_argument('--processes', type=int, default=1,
                               help='Number of processes to use')
+    check_parser.add_argument('--log_file', type=str, default='qPrimer.log', help='Path to the log file')
+    check_parser.add_argument('--out_name', type=str, default='qPrimer',
+                              help='Prefix name of the output file')
 
     # Create a parser for the visualize module
     visualize_parser = subparsers.add_parser('visualize', help='Run visualize module')
@@ -59,6 +65,9 @@ def main():
                                   help='Path to the sequence file with fasta format')
     visualize_parser.add_argument('--genes_num', type=int, default=10,
                                   help='Number of top genes to show')
+    visualize_parser.add_argument('--log_file', type=str, default='qPrimer.log', help='Path to the log file')
+    visualize_parser.add_argument('--out_name', type=str, default='qPrimer',
+                                  help='Prefix name of the output file')
 
     args = parser.parse_args()
 

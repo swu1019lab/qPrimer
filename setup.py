@@ -4,7 +4,7 @@
 # @Email   : lxd1997xy@163.com
 # @File    : setup.py
 
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 import os
 import stat
 
@@ -17,8 +17,8 @@ for file in bin_files:
 
 setup(
     name='qPrimer',
-    version='1.0.5',
-    packages=find_packages(),
+    version='1.0.6',
+    packages=find_namespace_packages(),
     entry_points={
         'console_scripts': [
             'qPrimer = qPrimer.qPrimer:main'

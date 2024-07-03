@@ -105,7 +105,11 @@ def design_primers(sequence) -> dict:
         return {}
 
     # Run Primer3
-    results = primer3.design_primers(seq_args, GLOBAL_ARGS)
+    try:
+        results = primer3.design_primers(seq_args, GLOBAL_ARGS)
+    except OSError as e:
+        print(f"Error designing primers for sequence {sequence.id}: {e}")
+        return {}
 
     # Add the sequence information to the results
     results['SEQUENCE_ID'] = sequence.id
@@ -130,7 +134,7 @@ def run(sequence_file, config_file, out_name, out_csv, processes) -> None:
         results = pool.map(design_primers, sequences)
 
     # Remove empty results: like sequences that are too short or have no primers
-    primer_results = [res for res in results if res or res['PRIMER_PAIR_NUM_RETURNED'] > 0]
+    primer_results = [res for res in results if res.get('PRIMER_PAIR_NUM_RETURNED', 0) > 0]
     if len(primer_results) == 0:
         print("No primers were designed!!!")
         return

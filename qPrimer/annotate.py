@@ -4,6 +4,7 @@
 # @Email   : lxd1997xy@163.com
 # @File    : annotate.py
 
+import re
 import json
 import multiprocessing
 from collections import defaultdict
@@ -18,8 +19,7 @@ def check_gtf(gtf_file) -> bool:
     :return: True if the file is a GTF file, False otherwise
     """
     i = 1
-    passed_list = [True, False, False]
-
+    passed_list = [False, False]
     # only check the first 1000 lines
     with open(gtf_file) as file:
         for line in file:
@@ -29,20 +29,36 @@ def check_gtf(gtf_file) -> bool:
                 continue
             fields = line.strip().split('\t')
             if len(fields) != 9:
-                passed_list[0] = False
+                return False
             if fields[2] == 'transcript' and fields[-1].find('transcript_id') > 0:
-                passed_list[1] = True
+                passed_list[0] = True
             if fields[2] == 'exon' and fields[-1].find('transcript_id') > 0:
-                passed_list[2] = True
+                passed_list[1] = True
             i += 1
     return all(passed_list)
 
 
-def extract_coord_from_gtf(gtf_file) -> tuple:
+def match_transcript_id(str_line: str):
+    """
+    Extract the transcript id from a GTF file line.
+
+    :param str_line: a line from a GTF file
+    :return: the transcript id
+    """
+    match = re.search(r'transcript_id\s+"([^"]+)"', str_line)
+    if match:
+        return match.group(1)
+    else:
+        raise ValueError('The transcript_id is not found in this line: \n\t{}.'.format(str_line))
+
+
+def extract_coord_from_gtf(gtf_file, feature='transcript', sub_feature='exon') -> tuple:
     """
     Extract mrna/exon coordinates from a GTF file.
 
     :param gtf_file: a GTF file with gene annotation information
+    :param feature: the feature type to extract coordinates
+    :param sub_feature: the sub_feature type to extract coordinates
     :return: a tuple of two dictionaries with mRNA and exon coordinates
     """
     mrna_coord = defaultdict(list)
@@ -56,12 +72,12 @@ def extract_coord_from_gtf(gtf_file) -> tuple:
             if line.startswith('#'):
                 continue
             fields = line.strip().split('\t')
-            if fields[2] == 'transcript':
-                transcript_id = fields[-1].split(';')[0].split()[1].strip('"')
+            if fields[2] == feature:
+                transcript_id = match_transcript_id(fields[-1])
                 # add chromosome, start, end, strand as value to the dictionary
                 mrna_coord[transcript_id] = [fields[0], int(fields[3]), int(fields[4]), fields[6]]
-            if fields[2] == 'exon':
-                transcript_id = fields[-1].split(';')[0].split()[1].strip('"')
+            if fields[2] == sub_feature:
+                transcript_id = match_transcript_id(fields[-1])
                 # add exon start and end as value to the dictionary
                 exon_coord[transcript_id].append([int(fields[3]), int(fields[4])])
     return mrna_coord, exon_coord
