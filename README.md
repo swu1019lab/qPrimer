@@ -48,7 +48,7 @@ qPrimer --help
 ```
 
 ```shell
-usage: qPrimer [-h] [--log_file LOG_FILE] [--out_name OUT_NAME] {design,annotate,check,visualize} ...
+usage: qPrimer [-h] [--version] {design,annotate,check,visualize} ...
 
 Run qPrimer package.
 
@@ -62,22 +62,24 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --log_file LOG_FILE   Path to the log file
-  --out_name OUT_NAME   Prefix name of the output file
+  --version             show program's version number and exit
 ```
 
 ### design module
 
 ```shell
-usage: qPrimer design [-h] --seq_file SEQ_FILE [--ini_file INI_FILE] [--processes PROCESSES] [--csv]
+usage: qPrimer design [-h] --seq_file SEQ_FILE [--ini_file INI_FILE] [--processes PROCESSES] [--csv] [--log_file LOG_FILE]
+                      [--out_name OUT_NAME]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --seq_file SEQ_FILE   Path to the sequence file
-  --ini_file INI_FILE   Path to the ini file
+  --seq_file SEQ_FILE   Path to the sequence file with fasta format
+  --ini_file INI_FILE   Path to the Primer3 configuration file with ini format
   --processes PROCESSES
-                        Number of CPUs to use
-  --csv                 Output the results in csv format
+                        Number of processes to use
+  --csv                 Save the results to a CSV file
+  --log_file LOG_FILE   Path to the log file
+  --out_name OUT_NAME   Prefix name of the output file
 ```
 
 default parameters setting (can ignore upper case and lower case) in
@@ -116,7 +118,7 @@ PRIMER_MAX_END_STABILITY = 9
 [PROGRAM]
 ```
 
-parameters specification:
+**Parameters specification**:
 
 - **primer_task**: generic
 - **primer_num_return**: 10, number of primer pairs to return
@@ -145,13 +147,13 @@ parameters specification:
   right primer
 - **primer_max_end_stability**: 9, maximum stability of the 3' end of the primer
 
-parameters references:
+**Parameters references**:
 > - Jeon H, Bae J, Hwang SH, et al. MRPrimerW2: an enhanced tool for rapid design of valid high-quality primers with
     multiple search modes for qPCR experiments. *Nucleic Acids Res*. 2019;47(W1):W614-W622. doi:10.1093/nar/gkz323
 >- Lu K, Li T, He J, et al. qPrimerDB: a thermodynamics-based gene-specific qPCR primer database for 147 organisms.
    *Nucleic Acids Res*. 2018;46(D1):D1229-D1236. doi:10.1093/nar/gkx725
 
-custom parameters setting for qPCR and other applications:
+**Custom parameters setting for qPCR and other applications**:
 > All the parameters from Primer3 can be set in the ini file, and the default parameters are set for qPCR. The
 > users can modify the parameters in the ini file to meet the specific requirements of the primer design not only for
 > qPCR but also for other applications.
@@ -159,47 +161,54 @@ custom parameters setting for qPCR and other applications:
 ### annotate module
 
 ```shell
-  
-usage: qPrimer annotate [-h] --primers PRIMERS --gtf_file GTF_FILE --snp_file SNP_FILE
+usage: qPrimer annotate [-h] --primers PRIMERS --gtf_file GTF_FILE --snp_file SNP_FILE [--processes PROCESSES] [--log_file LOG_FILE]
+                        [--out_name OUT_NAME]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --primers PRIMERS     Path to the primers file (json format)
-  --gtf_file GTF_FILE   Path to the gtf file
-  --snp_file SNP_FILE   Path to the snp file
+  --primers PRIMERS     Path to the primers results with json format
+  --gtf_file GTF_FILE   Path to the GTF file
+  --snp_file SNP_FILE   Path to the SNP file with bed format
   --processes PROCESSES
-                        Number of CPUs to use
+                        Number of processes to use
+  --log_file LOG_FILE   Path to the log file
+  --out_name OUT_NAME   Prefix name of the output file
+
 ```
 
 ### check module
 
 ```shell
-usage: qPrimer check [-h] --primers PRIMERS --database DATABASE
+usage: qPrimer check [-h] --primers PRIMERS --database DATABASE [--processes PROCESSES] [--log_file LOG_FILE] [--out_name OUT_NAME]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --primers PRIMERS     Path to the primers file (json format)
-  --database DATABASE   Path to the database file
+  --primers PRIMERS     Path to the primers results with json format
+  --database DATABASE   Path to the database file with fasta format
   --processes PROCESSES
-                        Number of CPUs to use
+                        Number of processes to use
+  --log_file LOG_FILE   Path to the log file
+  --out_name OUT_NAME   Prefix name of the output file
 ```
 
 ### visualize module
 
 ```shell
-usage: qPrimer visualize [-h] --primers PRIMERS --seq_file SEQ_FILE --genes_num GENES_NUM
+usage: qPrimer visualize [-h] --primers PRIMERS --seq_file SEQ_FILE [--genes_num GENES_NUM] [--log_file LOG_FILE] [--out_name OUT_NAME]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --primers PRIMERS     Path to the primers file (json format)
-  --seq_file SEQ_FILE   Path to the sequence file (fasta format)
+  --primers PRIMERS     Path to the primers results with json format
+  --seq_file SEQ_FILE   Path to the sequence file with fasta format
   --genes_num GENES_NUM
-                        Number of genes to display
+                        Number of top genes to show
+  --log_file LOG_FILE   Path to the log file
+  --out_name OUT_NAME   Prefix name of the output file
 ```
 
 ## Output
 
-The default output format is json, and the output file is named `qPrimer.json`.
+The default output format is JSON, and the output file is named `qPrimer.json`.
 The output file contains the following three main sections:
 
 1. Primer pair
