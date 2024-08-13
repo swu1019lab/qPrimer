@@ -289,10 +289,17 @@ qPrimer visualize \
 
 ## Citation
 
-If you use qPrimer and qPrimerDB, please cite the following paper:
+If you use qPrimerDB, please cite the following paper:
 
 > Lu K, Li T, He J, et al. qPrimerDB: a thermodynamics-based gene-specific qPCR primer database for 147 organisms.
 > *Nucleic Acids Res*. 2018;46(D1):D1229-D1236. doi:10.1093/nar/gkx725
+
+> Li X, Meng B, Zhang Z, et al. qPrimerDB 2.0: an updated comprehensive gene-specific qPCR primer database for 1172 organisms. 
+> *Nucleic Acids Res*. Published online August 9, 2024. doi:10.1093/nar/gkae684
+
+if you use qPrimer, please cite the following paper:
+> Li X, Meng B, Zhang Z, et al. qPrimerDB 2.0: an updated comprehensive gene-specific qPCR primer database for 1172 organisms. 
+> *Nucleic Acids Res*. Published online August 9, 2024. doi:10.1093/nar/gkae684
 
 ## Questions
 
