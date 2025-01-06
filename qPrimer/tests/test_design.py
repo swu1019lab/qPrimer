@@ -26,9 +26,9 @@ class TestDesign(unittest.TestCase):
 
     def test_run(self):
         # Run the run function with a test sequence file and 1 process
-        design.run('test_cds.fa', 'test.ini', 'qPrimer.json', 1)
+        design.run('test_cds.fa', 'test.ini', 'test', 1, 1)
         # Check the result
-        with open('qPrimer.json') as f:
+        with open('test.json') as f:
             result = f.read()
         self.assertIsInstance(result, str)
 

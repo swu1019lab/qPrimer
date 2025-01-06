@@ -17,7 +17,7 @@ GLOBAL_ARGS = {
     'PRIMER_NUM_RETURN': 10,
     'PRIMER_PICK_LEFT_PRIMER': 1,
     'PRIMER_PICK_RIGHT_PRIMER': 1,
-    'PRIMER_PICK_INTERNAL_OLIGO': 0,
+    'PRIMER_PICK_INTERNAL_OLIGO': 1,
     'PRIMER_MIN_GC': 40,
     'PRIMER_MAX_GC': 60,
     'PRIMER_OPT_GC_PERCENT': 50,
@@ -119,6 +119,16 @@ def design_primers(sequence) -> dict:
 
 
 def run(sequence_file, config_file, out_name, out_csv, processes) -> None:
+    """
+    Run the primer design pipeline
+
+    :param sequence_file: a fasta file containing the sequences to design primers
+    :param config_file: a configuration file for Primer3
+    :param out_name: the prefix name for the output files
+    :param out_csv: whether to save the results to a csv file
+    :param processes: the number of processes to use
+    :return: None
+    """
     print(f"Designing primers for sequences in {sequence_file}")
     # Parse the sequence file
     sequences = SeqIO.parse(sequence_file, 'fasta')
@@ -147,13 +157,17 @@ def run(sequence_file, config_file, out_name, out_csv, processes) -> None:
     # Save main results to a csv file
     if out_csv:
         columns = ['PENALTY', 'SEQUENCE', 'COORDS', 'TM', 'GC_PERCENT', 'END_STABILITY']
-        df_f_list, df_r_list = [], []
+        df_f_list, df_r_list, df_i_list = [], [], []
         for res in primer_results:
             df_f_list.append(
                 pd.DataFrame.from_records(res['PRIMER_LEFT'], columns=columns))
             df_r_list.append(
                 pd.DataFrame.from_records(res['PRIMER_RIGHT'], columns=columns).assign(ID=res['SEQUENCE_ID']))
-        df_f, df_r = pd.concat(df_f_list, ignore_index=True), pd.concat(df_r_list, ignore_index=True)
-        df_f.reset_index().merge(df_r.reset_index(), on='index', suffixes=('_F', '_R')).to_csv(out_name + ".csv",
-                                                                                               index=False)
+            df_i_list.append(
+                pd.DataFrame.from_records(res['PRIMER_INTERNAL'], columns=columns)
+            )
+        df_f, df_r, df_i = pd.concat(df_f_list, ignore_index=True), pd.concat(df_r_list, ignore_index=True), pd.concat(
+            df_i_list, ignore_index=True)
+        df_merge = df_f.reset_index().merge(df_r.reset_index(), on='index', suffixes=('_F', '_R'))
+        df_merge.merge(df_i.reset_index(), on='index').to_csv(out_name + ".csv", index=False)
         print(f"Results saved to {out_name}.csv")
